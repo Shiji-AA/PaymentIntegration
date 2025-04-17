@@ -1,0 +1,133 @@
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { axiosInstance } from "../../../api/axiosInstance";
+import home from "../../../assets/icons/home.png";
+import clock from "../../../assets/icons/clock.png";
+import box from "../../../assets/icons/box.png";
+import arrow from "../../../assets/icons/arrow.png";
+import cat4 from "../../../assets/hero.jpg";
+
+function CourseDetails() {
+  const { id } = useParams();
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axiosInstance
+      .get(`/getcoursebyiduser/${id}`)
+      .then((response) => {
+        setCourse(response.data?.CourseDetails);
+      })
+      .catch((error) => {
+        console.error("Error fetching course details:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) return <div className="text-center py-10">Loading...</div>;
+  if (!course) return <div className="text-center py-10">Course not found</div>;
+
+  return (
+    <>
+      <section className="relative h-[320px] md:h-[420px] w-full flex flex-col items-center justify-center text-white">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${cat4})`,
+            filter: "brightness(50%)",
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-gray-800 opacity-30"></div>
+        <div className="relative text-center">
+          <h1 className="text-5xl md:text-6xl font-bold">
+            {course?.courseName}
+          </h1>
+          <nav className="mt-2 text-lg">
+            <a
+              href="https://technical.arcite.in/"
+              className="text-white hover:underline"
+            >
+              Home
+            </a>
+            <span className="mx-2"> &gt; </span>
+            <span className="text-gray-300">{course.department?.title}</span>
+          </nav>
+        </div>
+      </section>
+
+      <section>
+        <div className="max-w-7xl mx-auto px-10 md:px-14 py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-4">
+            {/* Left: Course Content */}
+            <div className="lg:col-span-3">
+              <div className="bg-teal-800 text-white font-medium py-1 px-4 inline-block">
+                {course.department?.title}
+              </div>
+              <h1 className="text-4xl w-[750px] md:text-5xl font-bold text-gray-800 mt-6">
+                {course.courseName}
+              </h1>
+
+              <img
+                src={course.photo}
+                alt={course.courseName}
+                className="w-[750px] h-[400px] object-cover my-6"
+              />
+
+              <div className="mt-6 w-[750px] text-justify text-gray-700 leading-relaxed whitespace-pre-line">
+                {course.description}
+              </div>
+            </div>
+
+            {/* Right: Info Card (Hardcoded) */}
+            <div className="bg-white shadow-xl p-6 space-y-4 h-fit mt-10">
+              <div className="flex items-start gap-4 p-3 rounded-md hover:bg-gray-100 transition">
+                <img src={home} alt="Mode" className="w-6 h-6 object-contain" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 w-full">
+                  <div className="text-gray-800 font-semibold">Mpde :</div>
+                  <div className="text-sm text-gray-500">{course?.mode}</div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-3 rounded-md hover:bg-gray-100 transition">
+                <img
+                  src={clock}
+                  alt="Code"
+                  className="w-6 h-6 object-contain"
+                />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 w-full">
+                  <div className="text-gray-800 font-semibold">Code:</div>
+                  <div className="text-sm text-gray-500">
+                    {course?.courseCode}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-3 rounded-md hover:bg-gray-100 transition">
+                <img
+                  src={box}
+                  alt="Duration"
+                  className="w-6 h-6 object-contain"
+                />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 w-full">
+                  <div className="text-gray-800 font-semibold">Duration:</div>
+                  <div className="text-sm text-gray-500">
+                    {course?.duration}
+                  </div>
+                </div>
+              </div>
+
+              <button className="w-full mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white text-lg font-medium hover:bg-black hover:text-white border border-teal-600 transition">
+                Enroll Now
+                <img src={arrow} alt="Arrow" className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+export default CourseDetails;
