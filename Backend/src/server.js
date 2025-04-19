@@ -2,11 +2,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-// import userRoutes from "./Routes/userRoutes/userRoutes.js";
-// import adminRouter from "./Routes/adminRoutes/adminRoutes.js";
-import userRoutes from "./Routes/userRoutes";
-import adminRouter from "./Routes/adminRoutes";
-
+import userRoutes from "./Routes/userRoutes/userRoutes.js";
+import adminRouter from "./Routes/adminRoutes/adminRoutes.js";
 import { connectDB } from "./config/db.js";
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
