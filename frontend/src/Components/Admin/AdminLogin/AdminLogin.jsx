@@ -28,7 +28,7 @@ const adminUser = useSelector((state) => state.admin.admindata)
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    axiosInstanceAdmin.post('/admin', { email, password })
+    axiosInstanceAdmin.post('/adminLogin', { email, password })
       .then((response) => {
         console.log("Login API Response:", response.data);
   

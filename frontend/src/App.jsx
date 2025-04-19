@@ -24,7 +24,7 @@ function App() {
       <Toaster position="top-right"/>
       <Routes>
         {/* ADMIN SIDE */}
-        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/adminLogin" element={<AdminLogin />} />
         <Route element={<PrivatePageAdmin />}>
         <Route path="/admindashboard" element={<AdminDashboardPage />} />
         <Route path="/getallcourses" element={<CourseList />} />

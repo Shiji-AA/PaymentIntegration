@@ -8,7 +8,7 @@ const PrivatePageAdmin = () => {
     if(admin){
         return <Outlet />;
     }else {
-    return <Navigate to = {'/admin'}/>
+    return <Navigate to = {'/adminLogin'}/>
    }
 }
 

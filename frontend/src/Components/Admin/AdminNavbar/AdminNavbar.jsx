@@ -14,11 +14,11 @@ function AdminNavbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const adminUser = useSelector((state) => state.admin.admindata);
-  console.log(adminUser,"adminUser 5566 admin navbar page")
+  // console.log(adminUser,"adminUser 5566 admin navbar page")
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/admin"); // Redirect to login page or admin login page
+    navigate("/adminLogin"); 
   };
 
   return (

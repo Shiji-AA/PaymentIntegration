@@ -5,7 +5,7 @@ import { addCategory, addcourse, adminLogin, deleteCategory, deleteCourse, editC
 // import { isLogin } from "../../../Middleware/userAuth.js";
 
 
-adminRouter.post("/admin",adminLogin);
+adminRouter.post("/adminLogin",adminLogin);
 
 // Course
  adminRouter.post("/addcourse", addcourse);
