@@ -24,19 +24,19 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use(express.static(join(__dirname, '../../frontend/dist')));
 app.use("/api/users", userRoutes);
 app.use('/api/admin', adminRouter);
 
-
+// Then SPA fallback route
 app.get('*', (req, res) => {
   res.sendFile(join(__dirname, "../../frontend/dist/index.html"));
 });
 
 
-app.use(express.static(join(__dirname, '../../frontend/dist')));
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
+app.use((err, req, res) => {
+  console.error(err);
   res.status(500).json({ message: "Something went wrong!" });
 });
 
