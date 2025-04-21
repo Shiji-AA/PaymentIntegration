@@ -32,7 +32,7 @@ app.use(express.static(join(__dirname, '../../frontend/dist')));
 app.use("/api/users", userRoutes);
 app.use('/api/admin', adminRouter);
 
-app.get('/*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(join(__dirname, "../../frontend/dist/index.html"));
 });
 
