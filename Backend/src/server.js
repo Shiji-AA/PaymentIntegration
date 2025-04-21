@@ -38,7 +38,7 @@ app.use('/api/admin', adminRouter);
 app.use(express.static(join(__dirname, '../../frontend/dist')));
 
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(join(__dirname, "../../frontend/dist/index.html"));
 });
 
@@ -47,6 +47,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
-app.listen(port, () => {
+ app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
+
+
+
