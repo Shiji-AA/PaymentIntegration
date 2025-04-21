@@ -2,7 +2,7 @@ import express from "express";
 const adminRouter = express.Router();
 
 import { addCategory, addcourse, adminLogin, deleteCategory, deleteCourse, editCategory, editCourse, getAllCategory, getAllCources, getCategoryById, getCourseById,  } from "../../Controllers/adminController/adminController.js";
-// import { isLogin } from "../../../Middleware/userAuth.js";
+
 
 
 adminRouter.post("/adminLogin",adminLogin);

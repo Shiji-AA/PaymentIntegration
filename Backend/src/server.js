@@ -1,4 +1,3 @@
-
 import express from 'express';
 import cors from "cors";
 import dotenv from 'dotenv';
@@ -7,7 +6,6 @@ import { dirname, join } from 'path';
 import { connectDB } from './config/db.js';
 import userRoutes from "./Routes/userRoutes/userRoutes.js";
 import adminRouter from "./Routes/adminRoutes/adminRoutes.js";
-
 
 dotenv.config();
 connectDB();
@@ -28,16 +26,19 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+// Define API routes first
 app.use("/api/users", userRoutes);
 app.use('/api/admin', adminRouter);
 
-// Serving static files
+// Serving static files for frontend
 app.use(express.static(join(__dirname, '../../frontend/dist')));
 
+// Catch all other routes for frontend (React app)
 app.get('*', (req, res) => {
   res.sendFile(join(__dirname, "../../frontend/dist/index.html"));
 });
 
+// Test route for checking server status
 app.get('/', (req, res) => res.send("server is ready"));
 
 const port = process.env.PORT || 3000;
@@ -45,13 +46,3 @@ const port = process.env.PORT || 3000;
 app.listen(port, () =>
   console.log("server started")
 );
-
-
-
-
-
-
-
-
-
-
