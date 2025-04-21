@@ -32,18 +32,17 @@ app.use(express.static(join(__dirname, '../../frontend/dist')));
 app.use("/api/users", userRoutes);
 app.use('/api/admin', adminRouter);
 
+
 app.get('*', (req, res) => {
   res.sendFile(join(__dirname, "../../frontend/dist/index.html"));
 });
 
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ message: "Something went wrong!" });
-});
+app.get("/", (req, res) => res.send("Server is ready"));
 
- app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
-});
+app.listen(port, () => console.log(`Server started on port ${port}`));
+
+
+ 
 
 
 
