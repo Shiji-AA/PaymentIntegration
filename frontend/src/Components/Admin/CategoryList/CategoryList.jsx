@@ -26,7 +26,11 @@ const CategoryList = () => {
     Swal.fire({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this category!",
-      icon: "warning",    
+      icon: "warning",  
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",  
     })
     .then((willDelete) => {
       if (willDelete) {

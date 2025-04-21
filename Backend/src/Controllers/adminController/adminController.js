@@ -142,7 +142,7 @@ const getCourseById = async (req, res) => {
 
   const editCourse = async (req, res) => {
     try {
-      const { id } = req.params.id;
+      const { id } = req.params;
       const updateData = req.body; 
   
       console.log("Received Update Data:", updateData);
@@ -175,7 +175,7 @@ const getCourseById = async (req, res) => {
   
   const deleteCourse = async (req, res) => {
     try {
-      const { id } = req.params.id;
+      const { id } = req.params;
   
       // Check if course exists
       const course = await Course.findById(id);
@@ -270,7 +270,7 @@ try{
 
 const editCategory =async(req,res)=>{
   try{
-    const {id}= req.params.id;      
+    const {id}= req.params;      
     const {title,description} =req.body;
     const category = await Category.findById(id);
     if(!category){
@@ -294,7 +294,7 @@ const editCategory =async(req,res)=>{
 }
 const deleteCategory = async(req,res)=>{
   try{
-    const {id}=req.params.id;
+    const {id}=req.params;
     const category = await Category.findById(id);
     if(!category){
       return res.status(400).json({error:"Category not found"})

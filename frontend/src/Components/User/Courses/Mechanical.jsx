@@ -14,6 +14,7 @@ function Mechanical() {
   useEffect(()=>{
     axiosInstance.get('/getallcoursesuser',{
       params: { department: "Mechanical Engineering" },
+     
     })
     .then((response)=>{
       if(response.data?.courseDetails){

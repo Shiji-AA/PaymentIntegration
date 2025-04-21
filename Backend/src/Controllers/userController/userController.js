@@ -73,18 +73,15 @@ const loginUser = async (req, res) => {
   const getAllCources1 = async (req, res) => {
       try {
         const departmentName = req.query.department;
-        console.log(departmentName,"departmentName")
         if (!departmentName) {
           return res.status(400).json({ message: "Department name is required" });
-        }
-        const courseDetails = await Course.find()
-        .populate({
+        }    
+        const courseDetails = await Course.find().populate({
           path: "department",
           match: { title: departmentName },
-        });
-        
+        });      
+           
     const filteredCourses = courseDetails.filter(course => course.department);
-
               if (filteredCourses.length >0) {      
                res.status(200).json({
                 courseDetails:filteredCourses,
