@@ -85,7 +85,7 @@ function CourseDetails() {
               <div className="flex items-start gap-4 p-3 rounded-md hover:bg-gray-100 transition">
                 <img src={home} alt="Mode" className="w-6 h-6 object-contain" />
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 w-full">
-                  <div className="text-gray-800 font-semibold">Mpde :</div>
+                  <div className="text-gray-800 font-semibold">Mode :</div>
                   <div className="text-sm text-gray-500">{course?.mode}</div>
                 </div>
               </div>
@@ -114,6 +114,16 @@ function CourseDetails() {
                   <div className="text-gray-800 font-semibold">Duration:</div>
                   <div className="text-sm text-gray-500">
                     {course?.duration}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-3 rounded-md hover:bg-gray-100 transition">
+                <img src="" alt="" className="w-6 h-6 object-contain" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 w-full">
+                  <div className="text-gray-800 font-bold">
+                    {" "}
+                    ₹{course?.courseFee || "Not available"}
                   </div>
                 </div>
               </div>

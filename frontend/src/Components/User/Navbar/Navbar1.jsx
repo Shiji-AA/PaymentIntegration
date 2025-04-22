@@ -31,7 +31,7 @@ function Navbar1() {
   
   return (
     <div>
-      <nav className="flex flex-wrap items-center justify-between px-6 md:px-20 py-4 bg-white border-b border-gray-200">
+      <nav className="flex flex-wrap items-center justify-between px-6 md:px-20 py-4 bg-white border-b border-gray-200 shadow-xl">
         {/* Left Section: Logo + Divider + Nav Links */}
         <div className="flex items-center flex-wrap">
           <img src={logoArcite} alt="ARCITE" className="h-12 w-auto" />

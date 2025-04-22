@@ -19,6 +19,10 @@ const courseSchema = new mongoose.Schema(
       trim: true,
       lowercase: false,
     },  
+    courseFee: {
+      type: Number,
+      required: true,       
+    },    
     department: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',  

@@ -53,12 +53,13 @@ const addcourse = async (req, res) => {
         duration,
         courseName,    
         courseCode, 
+        courseFee, 
         photo,
         description
       } = req.body;
   
   // Check for missing fields
-  if (!department || !mode || !duration || !courseName || !courseCode || !photo || !description) {
+  if (!department || !mode || !duration || !courseName || !courseFee || !courseCode || !photo || !description) {
     return res.status(400).json({ error: "All fields are required" });
   }   
    
@@ -68,6 +69,7 @@ const addcourse = async (req, res) => {
         department,
         mode,    
         duration,
+        courseFee,
         courseName,
         courseCode,
         photo,
@@ -81,6 +83,7 @@ const addcourse = async (req, res) => {
           courseName,
           courseCode,
           duration,
+          courseFee,
           mode,
           department,
           description,

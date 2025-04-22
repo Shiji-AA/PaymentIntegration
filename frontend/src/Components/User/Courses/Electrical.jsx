@@ -58,9 +58,16 @@ function Electrical() {
                   </Link>
                  
                   <div className=" font-body text-start mt-4">
-                    <div className="bg-gray-200 text-teal-800 font-medium py-1 px-4 inline-block rounded-md hover:bg-teal-600 hover:text-white transition-colors duration-200 ">
-                      {course.department?.title}
-                    </div> 
+                  <div className="flex items-center gap-x-16">
+                      <div className="bg-gray-200 text-teal-800 font-medium py-1 px-4 inline-block rounded-md hover:bg-teal-600 hover:text-white transition-colors duration-200">
+                        {course.department?.title}
+                      </div>
+                      <div className="text-gray-800 font-semibold text-md">
+                        ₹{course.courseFee || "N/A"}
+                      </div>
+                    </div>
+
+
                     <Link to={`/courseDetailPage/${course._id}`}>
                     <h4 className="text-lg font-bold text-teal-800 mt-2">
                       {course.courseName}

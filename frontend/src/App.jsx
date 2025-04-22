@@ -16,6 +16,9 @@ import CourseDetailPage from "./Pages/user/CourseDetailPage";
 //import PrivatePages from "./Components/PrivatePages/PrivatePages";
 import PrivatePageAdmin from "./Components/PrivatePages/PrivatePageAdmin";
 import { Toaster } from "react-hot-toast";
+import RefundPolicy from "./Components/User/Policy/RefundPolicy";
+import PrivacyPolicy from "./Components/User/Policy/PrivacyPolicy";
+import TermsnConditions from "./Components/User/Policy/TermsnConditions";
 
 function App() {
   return (
@@ -40,6 +43,10 @@ function App() {
         <Route path="/" element={<CivilEngineering />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/refundPolicy" element={<RefundPolicy />} />
+        <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsnConditions />} />
+
         {/* <Route element={<PrivatePages />}> */}
         <Route path="/electrical" element={<ElectricalEngineering />} />
         <Route path="/mechanical" element={<MechanicalEngineering />} />

@@ -80,7 +80,8 @@ const CourseList = () => {
                       <th className="p-3 text-left">Course Name</th>
                       <th className="p-3 text-left">Department</th>
                       <th className="p-3 text-left">Mode</th>
-                      <th className="p-3 text-left">Duration</th>                      
+                      <th className="p-3 text-left">Duration</th>    
+                      <th className="p-3 text-left">Course Fee</th>                    
                       <th className="p-3 text-left">Photo</th>
                       <th className="p-3 text-left">Action</th>
                     </tr>
@@ -94,7 +95,7 @@ const CourseList = () => {
                         <td className="p-3">{course.department?.title || "N/A"}</td>
                         <td className="p-3">{course.mode}</td>
                         <td className="p-3">{course.duration}</td>
-                        
+                        <td className="p-3">{course.courseFee}</td>
                         <td className="p-3">
                           {course.photo ? (
                             <img

@@ -35,6 +35,9 @@ function EditCourse() {
     if (!values.courseCode) {
       errors.courseCode = "Course code is required";
     }
+    if (!values.courseFee) {
+      errors.courseFee = "Course Fee is required";
+    }
 
     if (!values.mode) {
       errors.mode = "Mode is required";
@@ -73,6 +76,7 @@ function EditCourse() {
           mode: course.mode || "",
           courseName: course.courseName || "",
           courseCode: course.courseCode || "",
+          courseFee: course.courseFee || "",
           duration: course.duration || "",
           photo: course.photo || null,
           description: course.description || "",
@@ -90,6 +94,7 @@ function EditCourse() {
       mode: "",
       courseName: "",
       courseCode: "",
+      courseFee: "",
       duration: "",
       photo: null,
       description: "",
@@ -293,6 +298,29 @@ function EditCourse() {
                   <p className="text-sm text-red-500">{formik.errors.duration}</p>
                 )}
               </div>
+
+
+               {/* Course Fee */}
+<div className="mb-4 shadow-md p-1 rounded-lg bg-white">
+  <label className="block font-medium text-gray-900 mb-1">
+    Course Fee
+  </label>
+  <input
+    type="text"
+    name="courseFee"
+    value={formik.values.courseFee}
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    className="w-full border p-2 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-600"
+    placeholder="e.g. 1500"
+  />
+  {formik.touched.courseFee && formik.errors.courseFee && (
+    <p className="text-sm text-red-500 mt-1">
+      {formik.errors.courseFee}
+    </p>
+  )}
+</div>
+
 
               {/* Description */}
               <div className="mb-4">

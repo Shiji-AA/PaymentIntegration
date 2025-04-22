@@ -27,12 +27,12 @@ function AddCourse() {
 
   const validate = (values) => {
     const errors = {};
-
     if (!values.courseName) errors.courseName = "Course Name is required";
     if (!values.courseCode) errors.courseCode = "Course Code is required";
     if (!values.department) errors.department = "Department is required";
     if (!values.mode) errors.mode = "Please select a mode";
     if (!values.duration) errors.duration = "Duration is required";
+    if (!values.courseFee) errors.courseFee = "Course Fee is required";
     if (!values.description) errors.description = "Description is required";
 
     if (values.photo && values.photo instanceof File) {
@@ -56,6 +56,7 @@ function AddCourse() {
     initialValues: {
       courseName: "",
       courseCode: "",
+      courseFee: "",
       department: "",
       mode: "",
       duration: "",
@@ -89,6 +90,7 @@ function AddCourse() {
         const addResponse = await axiosInstanceAdmin.post(`/addcourse`, {
           courseName: values.courseName,
           courseCode: values.courseCode,
+          courseFee: values.courseFee,
           department: values.department, // category _id
           mode: values.mode,
           duration: values.duration,
@@ -229,9 +231,27 @@ function AddCourse() {
               )}
             </div>
 
+
+  {/* Course Fee */}
+<div className="mb-4 shadow-md p-2 rounded-lg">
+  <label className="block text-sm font-medium text-gray-900">Course Fee</label>
+  <input
+    type="text"
+    name="courseFee"
+    value={formik.values.courseFee}
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    className="mt-1 p-2 w-full border border-tealLight rounded-md shadow-sm"
+    placeholder="e.g. 1500"
+  />
+  {formik.touched.courseFee && formik.errors.courseFee && (
+    <div className="text-red-500 text-sm">{formik.errors.courseFee}</div>
+  )}
+</div>
+
             {/* Description */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Description</label>
+              <label className="block text-sm font-medium text-gray-900">Description</label>
               <textarea
                 name="description"
                 value={formik.values.description}
@@ -248,7 +268,7 @@ function AddCourse() {
 
             {/* Upload Course Photo */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Upload Course Photo</label>
+              <label className="block text-sm font-medium text-gray-900">Upload Course Photo</label>
               <input
                 type="file"
                 name="photo"

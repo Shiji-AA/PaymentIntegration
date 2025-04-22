@@ -28,7 +28,7 @@ function Footer() {
                 emerging engineering community.
               </p>
 
-              <div className="mt-6">
+              <div className="mt-12">
                 <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">
                   Follow Us
                 </h3>
@@ -86,6 +86,21 @@ function Footer() {
                 {["Mechanical Engineering", "Electrical Engineering", "Civil Engineering", "Data Science", "Media"].map((dept, index) => (
                   <li key={index} className="text-sm">{dept}</li>
                 ))}
+
+
+                  {/* More Section Heading */}
+  <li className="pt-4 text-gray-1000 dark:text-white font-semibold text-lg">More</li>
+
+{/* More Links */}
+<li>
+  <Link to="/refundPolicy" className="text-sm hover:text-teal-600 transition-colors">Refund Policy</Link>
+</li>
+<li>
+  <Link to="/terms-and-conditions" className="text-sm hover:text-teal-600 transition-colors">Terms & Conditions</Link>
+</li>
+<li>
+  <Link to="/privacyPolicy" className="text-sm hover:text-teal-600 transition-colors">Privacy Policy</Link>
+</li>
               </ul>
             </div>
 
