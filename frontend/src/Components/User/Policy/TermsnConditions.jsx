@@ -62,7 +62,7 @@ function TermsnConditions() {
             <p>
               If you have any questions or concerns about these Terms & Conditions, feel free to reach out:
             </p>
-            <p className="mt-2">📧 support@arcite.in</p>
+            <p className="mt-2">📧 info@arcite.in</p>
             <p>📞 +91-799 421 1144</p>
           </section>
         </div>

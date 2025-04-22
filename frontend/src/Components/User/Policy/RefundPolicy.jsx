@@ -31,7 +31,7 @@ function RefundPolicy() {
           <section>
             <h2 className="text-xl font-semibold text-teal-600 mb-2">2. How to Request a Refund</h2>
             <ul className="list-disc ml-6 text-sm leading-relaxed">
-              <li>Email us at <strong>support@arcite.in</strong> with your course details and reason for the refund.</li>
+              <li>Email us at <strong>info@arcite.in</strong> with your course details and reason for the refund.</li>
               <li>Include your payment receipt or transaction ID.</li>
               <li>Allow up to 5–7 business days for processing.</li>
             </ul>
@@ -51,7 +51,7 @@ function RefundPolicy() {
             <p className="text-sm leading-relaxed">
               If you have any questions about our refund policy or need help with a refund request, feel free to reach out:
             </p>
-            <p className="text-sm mt-2">📧 support@arcite.in</p>
+            <p className="text-sm mt-2">📧 info@arcite.in</p>
             <p className="text-sm">📞 +91-799 421 1144</p>
           </section>
         </div>
