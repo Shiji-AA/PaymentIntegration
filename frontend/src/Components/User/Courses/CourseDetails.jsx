@@ -128,7 +128,25 @@ function CourseDetails() {
                 </div>
               </div>
 
-              <button className="w-full mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white text-lg font-medium hover:bg-black hover:text-white border border-teal-600 transition">
+              {/* select campus */}
+           {/* select campus dropdown */}
+<div className="mt-4">
+  <label htmlFor="campus" className="block text-sm font-medium text-gray-900 mb-1 p-1">
+    Select Campus:
+  </label>
+  <select
+    id="campus"
+    name="campus"
+    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+  >
+    <option value="Kottiyam">Kottiyam</option>
+    <option value="Kadappakkada">Kadappakkada</option>
+    <option value="Kochi">Kochi</option>
+  </select>
+</div>
+
+
+              <button className="w-full mt-8 flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white text-lg font-medium hover:bg-black hover:text-white border border-teal-600 transition">
                 Enroll Now
                 <img src={arrow} alt="Arrow" className="w-5 h-5" />
               </button>
