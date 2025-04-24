@@ -41,14 +41,9 @@ function CourseDetails() {
         ></div>
         <div className="absolute inset-0 bg-gray-800 opacity-30"></div>
         <div className="relative text-center">
-          <h1 className="text-5xl md:text-6xl font-bold">
-            {course?.courseName}
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-bold">{course?.courseName}</h1>
           <nav className="mt-2 text-lg">
-            <a
-              href="https://technical.arcite.in/"
-              className="text-white hover:underline"
-            >
+            <a href="https://technical.arcite.in/" className="text-white hover:underline">
               Home
             </a>
             <span className="mx-2"> &gt; </span>
@@ -58,63 +53,54 @@ function CourseDetails() {
       </section>
 
       <section>
-        <div className="max-w-7xl mx-auto px-10 md:px-14 py-10">
-          <div className="grid grid-cols-1 lg:grid-cols-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Left: Course Content */}
             <div className="lg:col-span-3">
               <div className="bg-teal-800 text-white font-medium py-1 px-4 inline-block">
                 {course.department?.title}
               </div>
-              <h1 className="text-4xl w-[750px] md:text-5xl font-bold text-gray-800 mt-6">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mt-6">
                 {course.courseName}
               </h1>
 
-              <img
-                src={course.photo}
-                alt={course.courseName}
-                className="w-[750px] h-[400px] object-cover my-6"
-              />
+              {/* Padding wrapper for image & description */}
+              <div className="px-4 md:px-8">
+                <img
+                  src={course.photo}
+                  alt={course.courseName}
+                  className="w-full h-auto object-cover my-6 rounded-md"
+                />
 
-              <div className="mt-6 w-[750px] text-justify text-gray-700 leading-relaxed whitespace-pre-line">
-                {course.description}
+                <div className="mt-6 text-justify text-gray-700 leading-relaxed whitespace-pre-line text-base sm:text-lg">
+                  {course.description}
+                </div>
               </div>
             </div>
 
-            {/* Right: Info Card (Hardcoded) */}
-            <div className="bg-white shadow-xl p-6 space-y-4 h-fit mt-10">
+            {/* Right: Info Card */}
+            <div className="bg-white shadow-xl p-6 space-y-4 h-fit mt-10 lg:mt-0 rounded-md">
               <div className="flex items-start gap-4 p-3 rounded-md hover:bg-gray-100 transition">
                 <img src={home} alt="Mode" className="w-6 h-6 object-contain" />
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 w-full">
-                  <div className="text-gray-800 font-semibold">Mode :</div>
+                  <div className="text-gray-800 font-semibold">Mode:</div>
                   <div className="text-sm text-gray-500">{course?.mode}</div>
                 </div>
               </div>
 
               <div className="flex items-start gap-4 p-3 rounded-md hover:bg-gray-100 transition">
-                <img
-                  src={clock}
-                  alt="Code"
-                  className="w-6 h-6 object-contain"
-                />
+                <img src={clock} alt="Code" className="w-6 h-6 object-contain" />
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 w-full">
                   <div className="text-gray-800 font-semibold">Code:</div>
-                  <div className="text-sm text-gray-500">
-                    {course?.courseCode}
-                  </div>
+                  <div className="text-sm text-gray-500">{course?.courseCode}</div>
                 </div>
               </div>
 
               <div className="flex items-start gap-4 p-3 rounded-md hover:bg-gray-100 transition">
-                <img
-                  src={box}
-                  alt="Duration"
-                  className="w-6 h-6 object-contain"
-                />
+                <img src={box} alt="Duration" className="w-6 h-6 object-contain" />
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 w-full">
                   <div className="text-gray-800 font-semibold">Duration:</div>
-                  <div className="text-sm text-gray-500">
-                    {course?.duration}
-                  </div>
+                  <div className="text-sm text-gray-500">{course?.duration}</div>
                 </div>
               </div>
 
@@ -122,31 +108,28 @@ function CourseDetails() {
                 <img src="" alt="" className="w-6 h-6 object-contain" />
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 w-full">
                   <div className="text-gray-800 font-bold">
-                    {" "}
                     ₹{course?.courseFee || "Not available"}
                   </div>
                 </div>
               </div>
 
-              {/* select campus */}
-           {/* select campus dropdown */}
-<div className="mt-4">
-  <label htmlFor="campus" className="block text-sm font-medium text-gray-900 mb-1 p-1">
-    Select Campus:
-  </label>
-  <select
-    id="campus"
-    name="campus"
-    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
-  >
-    <option value="Kottiyam">Kottiyam</option>
-    <option value="Kadappakkada">Kadappakkada</option>
-    <option value="Kochi">Kochi</option>
-  </select>
-</div>
+              {/* Select campus dropdown */}
+              <div className="mt-4">
+                <label htmlFor="campus" className="block text-sm font-medium text-gray-900 mb-1 p-1">
+                  Select Campus:
+                </label>
+                <select
+                  id="campus"
+                  name="campus"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                >
+                  <option value="Kottiyam">Kottiyam</option>
+                  <option value="Kadappakkada">Kadappakkada</option>
+                  <option value="Kochi">Kochi</option>
+                </select>
+              </div>
 
-
-              <button className="w-full mt-8 flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white text-lg font-medium hover:bg-black hover:text-white border border-teal-600 transition">
+              <button className="w-full mt-8 flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white text-lg font-medium hover:bg-black hover:text-white border border-teal-600 transition rounded-md">
                 Enroll Now
                 <img src={arrow} alt="Arrow" className="w-5 h-5" />
               </button>
