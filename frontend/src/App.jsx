@@ -19,6 +19,7 @@ import { Toaster } from "react-hot-toast";
 import RefundPolicy from "./Components/User/Policy/RefundPolicy";
 import PrivacyPolicy from "./Components/User/Policy/PrivacyPolicy";
 import TermsnConditions from "./Components/User/Policy/TermsnConditions";
+import SoftwarePage from "./Pages/user/SoftwarePage";
 
 function App() {
   return (
@@ -49,7 +50,8 @@ function App() {
 
         {/* <Route element={<PrivatePages />}> */}
         <Route path="/electrical" element={<ElectricalEngineering />} />
-        <Route path="/mechanical" element={<MechanicalEngineering />} />
+        <Route path="/mechanical" element={<MechanicalEngineering />} />      
+        <Route path="/software" element={<SoftwarePage/>} />
         <Route path="/courseDetailPage/:id" element={<CourseDetailPage/>} />
         {/* </Route>  */}
 

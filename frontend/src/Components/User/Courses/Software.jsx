@@ -6,14 +6,15 @@ import { useEffect, useState } from "react";
 import { axiosInstance } from "../../../api/axiosInstance";
 import toast from "react-hot-toast";
 
-function Electrical() {
+function Software() {
   
   const[courseDetails,setCourseDetails]= useState([])
   const[loading,setLoading]=useState(true)
 
   useEffect(()=>{
     axiosInstance.get('/getallcoursesuser',{
-      params: { department: "Electrical Engineering" },
+      params: { department: "Software" },
+     
     })
     .then((response)=>{
       if(response.data?.courseDetails){
@@ -66,8 +67,6 @@ function Electrical() {
                         ₹{course.courseFee || "N/A"}
                       </div>
                     </div>
-
-
                     <Link to={`/courseDetailPage/${course._id}`}>
                     <h4 className="text-lg font-bold text-teal-800 mt-2">
                       {course.courseName}
@@ -93,6 +92,9 @@ function Electrical() {
   </p>
 </div>
 
+
+
+
                   </div>
                 </div>
               ))}
@@ -108,4 +110,4 @@ function Electrical() {
   );
 }
 
-export default Electrical;
+export default Software;

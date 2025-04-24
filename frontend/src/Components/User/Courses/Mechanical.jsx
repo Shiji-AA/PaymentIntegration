@@ -76,24 +76,21 @@ function Mechanical() {
 
                  
                     {/* Mode and Duration Section */}
-  
-                    <div className=" font-body flex justify-start gap-0 mt-4 ">
-                      <p className="border border-gray-300  rounded-3xl px-10 py-3 text-sm bg-gray-100 shadow-sm flex flex-col">
-                        {/* Icon and Label in the same line */}
-                        <div className="flex items-center gap-2">
-                          <Eye className="w-5 h-5 text-gray-600" />
-                          <span className="font-medium">Mode:</span>
-                        </div>
-  
-                        {/* Course Mode in the next line */}
-                        <span>{course.mode || "Not available"}</span>
-                      </p>
-                      <p className="border border-gray-300 rounded-3xl px-6 py-3 text-sm bg-gray-100 shadow-sm flex items-center gap-2">
-                        <Calendar className="w-5 h-5 text-gray-600" />
-                        <span className="font-medium"></span>
-                        <span>{course.duration || "Not available"}</span>
-                      </p>
-                    </div>
+                    <div className="font-body flex justify-start gap-2 mt-4">
+  {/* Mode */}
+  <p className="border border-gray-300 rounded-3xl px-6 py-2 text-sm bg-gray-100 shadow-sm flex items-center gap-2">
+    <Eye className="w-4 h-4 text-gray-600" />
+    <span className="font-medium">Mode:</span>
+    <span>{course.mode || "Not available"}</span>
+  </p>
+
+  {/* Duration */}
+  <p className="border border-gray-300 rounded-3xl px-6 py-2 text-sm bg-gray-100 shadow-sm flex items-center gap-2">
+    <Calendar className="w-4 h-4 text-gray-600" />
+    <span className="font-medium">{course.duration || "Not available"}</span>
+  </p>
+</div>
+
                   </div>
                 </div>
               ))}

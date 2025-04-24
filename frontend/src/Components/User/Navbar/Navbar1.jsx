@@ -127,7 +127,7 @@ function Navbar1() {
                   Mechanical Engineering
                 </Link>
                 <Link
-                  to="/cse"
+                  to="https://data-science.arcite.in/courses"
                   className="block px-4 py-2 text-gray-800 hover:bg-teal-100 hover:text-teal-700"
                 >
                   Computer Science Engineering
