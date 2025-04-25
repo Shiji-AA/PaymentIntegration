@@ -108,7 +108,7 @@ function CourseDetails() {
                 <img src="" alt="" className="w-6 h-6 object-contain" />
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 w-full">
                   <div className="text-gray-800 font-bold">
-                    ₹{course?.courseFee || "Not available"}
+                   Reg Fee :  ₹{course?.courseFee || "Not available"}
                   </div>
                 </div>
               </div>

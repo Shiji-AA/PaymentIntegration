@@ -62,7 +62,7 @@ function Software() {
                       {course.department?.title}
                     </div>
                     <div className="text-gray-800 font-semibold text-sm sm:text-base">
-                      ₹{course.courseFee || "N/A"}
+                      Reg Fee : ₹{course.courseFee || "N/A"}
                     </div>
                   </div>
 
