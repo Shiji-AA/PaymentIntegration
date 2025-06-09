@@ -6,6 +6,9 @@ import { dirname, join } from 'path';
 import { connectDB } from './config/db.js';
 import userRoutes from "./Routes/userRoutes/userRoutes.js";
 import adminRouter from "./Routes/adminRoutes/adminRoutes.js";
+import juspayConfig from "./config/juspayConfig.js"
+import juspayRouter from './Routes/juspayRoutes.js';
+console.log(juspayConfig.MERCHANT_ID); 
 
 dotenv.config();
 connectDB();
@@ -29,6 +32,7 @@ app.use(cors(corsOptions));
 // Define API routes first
 app.use("/api/users", userRoutes);
 app.use('/api/admin', adminRouter);
+app.use('/api/payment', juspayRouter);
 
 // Serving static files for frontend
 app.use(express.static(join(__dirname, '../../frontend/dist')));

@@ -20,6 +20,8 @@ import RefundPolicy from "./Components/User/Policy/RefundPolicy";
 import PrivacyPolicy from "./Components/User/Policy/PrivacyPolicy";
 import TermsnConditions from "./Components/User/Policy/TermsnConditions";
 import SoftwarePage from "./Pages/user/SoftwarePage";
+import EnrollmentPage from "./Pages/user/EnrollmentPage";
+import PaymentSuccess from "./Components/User/Courses/PaymentSuccess";
 
 function App() {
   return (
@@ -47,12 +49,15 @@ function App() {
         <Route path="/refundPolicy" element={<RefundPolicy />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsnConditions />} />
-
+        <Route path="/payment/success" element={<PaymentSuccess />} />
         {/* <Route element={<PrivatePages />}> */}
         <Route path="/electrical" element={<ElectricalEngineering />} />
         <Route path="/mechanical" element={<MechanicalEngineering />} />      
         <Route path="/software" element={<SoftwarePage/>} />
         <Route path="/courseDetailPage/:id" element={<CourseDetailPage/>} />
+        <Route path="/enroll" element={<EnrollmentPage/>} />
+      
+
         {/* </Route>  */}
 
        </Routes>

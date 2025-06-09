@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { axiosInstance } from "../../../api/axiosInstance";
+import { axiosInstance, axiosInstancePayment } from "../../../api/axiosInstance";
 import home from "../../../assets/icons/home.png";
 import clock from "../../../assets/icons/clock.png";
 import box from "../../../assets/icons/box.png";
 import arrow from "../../../assets/icons/arrow.png";
 import cat4 from "../../../assets/hero.jpg";
+
 
 function CourseDetails() {
   const { id } = useParams();
@@ -28,6 +29,27 @@ function CourseDetails() {
 
   if (loading) return <div className="text-center py-10">Loading...</div>;
   if (!course) return <div className="text-center py-10">Course not found</div>;
+
+
+const handleEnrollNow = async () => {
+  try {
+    const response = await axiosInstancePayment.post('/initiate', {
+      amount: course?.courseFee || 100,
+      customerId: `user_${Date.now()}`,
+    });
+
+    if (response.data.status === 'NEW' && response.data.payment_links?.web) {
+      window.location.href = response.data.payment_links.web;
+    } else {
+      alert('Could not initiate payment.');
+    }
+  } catch (error) {
+    console.error('Payment initiation failed:', error);
+    alert('Error initiating payment. Please try again.');
+  }
+};
+
+
 
   return (
     <>
@@ -129,10 +151,22 @@ function CourseDetails() {
                 </select>
               </div>
 
+              {/* <Link to ="/enroll">
               <button className="w-full mt-8 flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white text-lg font-medium hover:bg-black hover:text-white border border-teal-600 transition rounded-md">
                 Enroll Now
                 <img src={arrow} alt="Arrow" className="w-5 h-5" />
               </button>
+              </Link> */}
+              <button
+  onClick={handleEnrollNow}
+  className="w-full mt-8 flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white text-lg font-medium hover:bg-black hover:text-white border border-teal-600 transition rounded-md"
+>
+  Enroll Now
+  <img src={arrow} alt="Arrow" className="w-5 h-5" />
+</button>
+
+
+           
             </div>
           </div>
         </div>
