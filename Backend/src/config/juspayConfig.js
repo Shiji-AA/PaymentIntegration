@@ -8,8 +8,8 @@ const juspay = new Juspay({
   baseUrl: "https://smartgatewayuat.hdfcbank.com", // Sandbox
   jweAuth: {
     keyId: process.env.KEY_UUID,
-    publicKey: fs.readFileSync(process.env.PUBLIC_KEY_PATH),
-    privateKey: fs.readFileSync(process.env.PRIVATE_KEY_PATH)
+    publicKey: fs.readFileSync(process.env.PUBLIC_KEY_PATH,'utf8'),
+    privateKey: fs.readFileSync(process.env.PRIVATE_KEY_PATH,'utf8')
   }
 });
 
