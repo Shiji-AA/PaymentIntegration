@@ -10,7 +10,9 @@ dotenv.config()
 juspayRouter.post('/initiate', async (req, res) => {
   const orderId = `order_${Date.now()}`;
   const amount = req.body.amount || 100;
-  const returnUrl = `${req.protocol}://${req.get('host')}/api/payment/response`;
+   const returnUrl = `https://courses.arcite.in/api/payment/response`;
+   //const returnUrl = `https://${req.get('host')}/api/payment/response`;
+  //const returnUrl = `${req.protocol}://${req.get('host')}/api/payment/response`;
 
   try {
     const session = await juspay.orderSession.create({
