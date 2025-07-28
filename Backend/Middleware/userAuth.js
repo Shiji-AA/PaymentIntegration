@@ -1,4 +1,5 @@
-import User from '../src/Model/UserModel.js'
+
+import User from '../src/model/userModel.js';
 import jwt from 'jsonwebtoken';
 
 const findUser = async (userId) => {

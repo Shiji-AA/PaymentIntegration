@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import Course from '../../model/courseModel.js';
 
 
+
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -38,7 +39,6 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
       const { email, password } = req.body;   
-      console.log(email,password)   
       const user = await User.findOne({ email });
   
       if (!user) {
@@ -54,7 +54,7 @@ const loginUser = async (req, res) => {
           id: user.id,
         };
         const token = generateToken(user.id);
-        console.log(token)
+        
         return res.json({
           userData,
           token,
@@ -120,8 +120,10 @@ const loginUser = async (req, res) => {
                 message: "An error occurred. Please try again later.",
               });
             }
-          };
-          
+          };         
+       
+
+
 
 
 

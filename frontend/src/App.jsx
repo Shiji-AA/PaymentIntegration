@@ -22,6 +22,8 @@ import TermsnConditions from "./Components/User/Policy/TermsnConditions";
 import SoftwarePage from "./Pages/user/SoftwarePage";
 import EnrollmentPage from "./Pages/user/EnrollmentPage";
 import PaymentSuccess from "./Components/User/Courses/PaymentSuccess";
+import ReceiptPage from "./Components/User/Enrollment/ReceiptPage";
+
 
 function App() {
   return (
@@ -56,6 +58,8 @@ function App() {
         <Route path="/software" element={<SoftwarePage/>} />
         <Route path="/courseDetailPage/:id" element={<CourseDetailPage/>} />
         <Route path="/enroll" element={<EnrollmentPage/>} />
+        <Route path="/receipt/:orderId" element={<ReceiptPage/>} />
+        
       
 
         {/* </Route>  */}
