@@ -1,159 +1,110 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-function CourseEnrollment() {
-  const [courses, setCourses] = useState([]);
-  const [selectedCourse, setSelectedCourse] = useState(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    location: '',
-    course: '',
-    selectedCampus: '',
-    paymentReference: '',
-  });
+import { axiosInstance,axiosInstancePayment } from "../../../api/axiosInstance";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
-  // Mock course data (replace with API call later)
+
+const CheckoutPage = () => {
+  const userData = useSelector((state) => state.auth.userdata);
+  const studentId = userData?.id; //to payment controller to create order
+
+  const { id } = useParams();
+  const [courseDetails, setCourseDetails] = useState(null);
+
+  
+
+
   useEffect(() => {
-    const mockCourses = [
-      {
-        _id: '1',
-        name: 'Web Development Bootcamp',
-        description: 'Learn HTML, CSS, JavaScript, and React in 12 weeks.',
-        fee: 25000,
-      },
-      {
-        _id: '2',
-        name: 'Data Science Essentials',
-        description: 'Introduction to Python, Pandas, and machine learning.',
-        fee: 30000,
-      },
-      {
-        _id: '3',
-        name: 'UI/UX Design Masterclass',
-        description: 'Master design thinking, Figma, and user testing.',
-        fee: 20000,
-      },
-    ];
-
-    setCourses(mockCourses);
+    axiosInstance
+      .get(`/checkout/${id}`)
+      .then((response) => {
+        if (response.data) {
+          setCourseDetails(response.data.courseDetails);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        toast("Error fetching data. Please try again later.");
+      });
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    if (name === 'course') {
-      const course = courses.find((c) => c._id === value);
-      setSelectedCourse(course);
+  const handleSubmit = (courseDetails) => (e) => {
+    e.preventDefault();
+    if (!courseDetails) {
+      console.error("No course details available.");
+      toast.error("No course details available.");
+      return;
     }
+    axiosInstancePayment
+      .post("/create-checkout-session", { courseDetails, studentId })
+      .then((response) => {
+        const url = response.data.url;
+        window.location.href = url;
+      })
+      .catch((error) => {
+        console.error("Error creating checkout session:", error);
+        toast.error("Error creating checkout session. Please try again later.");
+      });
   };
-
-  const handleCheckout = () => {
-    console.log('Proceeding to checkout with:', formData);
-    alert('Proceeding to checkout...');
-    // Redirect to payment here if needed
-  };
-
-  if (!courses.length) {
-    return <div className="text-center mt-10 text-gray-500">Loading courses...</div>;
-  }
 
   return (
-    <div className=" mt-20  mb-20 bg-yellow-500 max-w-2xl mx-auto p-6 bg-white shadow-md rounded space-y-6">
-      <h2 className="text-2xl font-bold text-center">Course Enrollment</h2>
-
-      {/* User Info */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          placeholder="Full Name"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          placeholder="Email"
-          required
-        />
-      </div>
-
-
-
-      {/* Course Selection */}
-      <div>
-        <label className="block text-sm font-medium mb-1">Select Course</label>
-        <select
-          name="course"
-          value={formData.course}
-          onChange={handleChange}
-          required
-          className="w-full border p-2 rounded"
-        >
-          <option value="">-- Choose a course --</option>
-          {courses.map((course) => (
-            <option key={course._id} value={course._id}>
-              {course.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Course Details */}
-      {selectedCourse && (
-        <div className="p-4 border rounded bg-gray-100">
-          <h3 className="font-semibold text-lg">{selectedCourse.name}</h3>
-          <p className="text-sm mt-1">{selectedCourse.description}</p>
-          <p className="mt-2 font-medium text-blue-700">Fee: ₹{selectedCourse.fee}</p>
-        </div>
-      )}
-
-      {/* Campus Selection */}
-      <div>
-        <label className="block text-sm font-medium mb-1">Select Campus</label>
-        <select
-          name="selectedCampus"
-          value={formData.selectedCampus}
-          onChange={handleChange}
-          required
-          className="w-full border p-2 rounded"
-        >
-          <option value="">-- Select campus --</option>
-          <option value="Kottiyam">Kottiyam</option>
-          <option value="Kollam">Kollam</option>
-          <option value="Kochi">Kochi</option>
-        </select>
-      </div>
-
-      {/* Optional Payment Reference */}
-      <input
-        type="text"
-        name="paymentReference"
-        value={formData.paymentReference}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-        placeholder="Payment Reference (optional)"
-      />
-
-      {/* Checkout Button */}
-      <button
-        onClick={handleCheckout}
-        className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+    <>
+    
+      <div
+        className="min-h-screen flex flex-col items-center justify-center"
+        style={{ background: "linear-gradient(to bottom, #3182CE, #ffffff)" }}
       >
-        Proceed to Checkout
-      </button>
-    </div>
-  );
-}
+        <div className="bg-white rounded-lg p-8 shadow-lg">
+          <h1 className="text-3xl font-bold text-gray-800 mb-8">
+            Checkout Here
+          </h1>
 
-export default CourseEnrollment;
+          <div className="flex justify-between items-center mb-8">
+            <div className="max-w-md cursor-pointer rounded-lg bg-white p-4 shadow-md">
+              <img
+                className="w-full h-60 object-cover rounded-lg"
+                src={courseDetails?.photo}
+                alt="course"
+              />
+              <div className="mt-4">
+                <h4 className="font-bold text-gray-800">
+                  {courseDetails?.courseName}
+                </h4>
+                <p className="text-gray-600">
+                  {courseDetails?.courseDescription}
+                </p>
+                <p className="text-gray-700 mt-2">
+                  Duration: {courseDetails?.courseDuration}
+                </p>
+              </div>
+            </div>
+
+            <div className="max-w-md cursor-pointer rounded-lg bg-white bg-opacity-90 p-4 shadow-md">
+              <h5 className="mb-4 ml-4 text-xl font-semibold text-gray-800">
+                ₹ {courseDetails?.courseFee}
+              </h5>
+              <h2 className="text-xl font-semibold text-teal-600">
+                Pay with Stripe
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Secure and convenient payments with Stripe.
+              </p>
+              <form onSubmit={handleSubmit(courseDetails)} method="POST">
+                <button
+                  type="submit"
+                  className="mt-4 px-6 py-3 bg-teal-500 text-white rounded-md hover:bg-teal-700"
+                >
+                  Checkout
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default CheckoutPage;
