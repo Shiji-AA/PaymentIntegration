@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import generateToken from '../../../Utils/generateToken.js'
+import generateToken from '../../../Utils/generateToken.mjs'
 import mongoose from "mongoose";
 import User from '../../model/userModel.js';
 import bcrypt from 'bcryptjs';
