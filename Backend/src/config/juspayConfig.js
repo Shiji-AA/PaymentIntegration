@@ -8,7 +8,7 @@ console.log('Exists:', fs.existsSync(process.env.PRIVATE_KEY_PATH));
 
 const juspay = new Juspay({
   merchantId: process.env.MERCHANT_ID,
-  baseUrl: "https://smartgatewayuat.hdfcbank.com", // Sandbox
+  baseUrl: "https://smartgateway.hdfcbank.com",
   jweAuth: {
     keyId: process.env.KEY_UUID,
     publicKey: fs.readFileSync(process.env.PUBLIC_KEY_PATH,'utf8'),
