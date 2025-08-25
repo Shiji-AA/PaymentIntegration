@@ -44,7 +44,8 @@ juspayRouter.post('/initiate', async (req, res) => {
       return res.status(404).json({ error: "Invalid course ID" });
     }
 
-    const amount = course.fee || course.amount || 1000;
+    // const amount = course.fee || course.amount || 1000;
+    const amount = 12;
     const coursename = course.name || course.title || "Course Payment";
 
     // Create Juspay order session

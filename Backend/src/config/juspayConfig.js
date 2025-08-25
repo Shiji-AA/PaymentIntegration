@@ -5,7 +5,7 @@ import { Juspay } from 'expresscheckout-nodejs';
 
 const juspay = new Juspay({
   merchantId: process.env.MERCHANT_ID,
-  baseUrl: "https://smartgatewayuat.hdfcbank.com", // Sandbox
+  baseUrl: "https://smartgateway.hdfcbank.com",
   jweAuth: {
     keyId: process.env.KEY_UUID,
     publicKey: fs.readFileSync(process.env.PUBLIC_KEY_PATH,'utf8'),
