@@ -7,8 +7,11 @@ import dotenv from "dotenv";
 dotenv.config();
 const juspayRouter = express.Router();
 
-// Set allowed return URL to prevent tampering
+// Allowed return URL (for Juspay session)
 const ALLOWED_RETURN_URL = process.env.JUSPAY_RETURN_URL || 'https://courses.arcite.in/api/payment/response';
+
+// FRONTEND URL (used for redirects)
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:4000';
 
 // ---------------------------------------------
 // Initiate Payment
@@ -33,8 +36,7 @@ juspayRouter.post('/initiate', async (req, res) => {
   }
 
   try {
-    // Fetch course securely
-      const existingOrder = await Order.findOne({ orderId });
+    const existingOrder = await Order.findOne({ orderId });
     if (existingOrder) {
       return res.status(400).json({ error: "Duplicate orderId. Please try again." });
     }
@@ -64,7 +66,7 @@ juspayRouter.post('/initiate', async (req, res) => {
       description: `Payment for ${coursename}`,
     });
 
-    //Save order in DB
+    // Save order in DB
     await Order.create({
       orderId,
       user: userId,
@@ -77,7 +79,6 @@ juspayRouter.post('/initiate', async (req, res) => {
     });
 
     if (session.http) delete session.http;
-
     return res.status(200).json(session);
 
   } catch (err) {
@@ -97,26 +98,7 @@ juspayRouter.post('/response', async (req, res) => {
   try {
     const statusResponse = await juspay.order.status(orderId);
     const orderStatus = statusResponse.status;
-
-    let message = '';
-    switch (orderStatus) {
-      case "CHARGED":
-        message = "Order payment done successfully";
-        break;
-      case "PENDING":
-      case "PENDING_VBV":
-        message = "Order payment pending";
-        break;
-      case "AUTHORIZATION_FAILED":
-        message = "Order payment authorization failed";
-        break;
-      case "AUTHENTICATION_FAILED":
-        message = "Order payment authentication failed";
-        break;
-      default:
-        message = "Order status: " + orderStatus;
-        break;
-    }
+    const amount = statusResponse.amount;
 
     // Update order in DB
     await Order.findOneAndUpdate(
@@ -125,9 +107,16 @@ juspayRouter.post('/response', async (req, res) => {
       { new: true }
     );
 
-    const responsePayload = makeJuspayResponse(statusResponse);
-    responsePayload.message = message;
-    return res.json(responsePayload);
+    // Redirect user to frontend with query params
+    if (orderStatus === "CHARGED") {
+      return res.redirect(
+        `${FRONTEND_URL}/payment/success?orderId=${orderId}&amount=${amount}&status=${orderStatus}`
+      );
+    } else {
+      return res.redirect(
+        `${FRONTEND_URL}/payment/failure?orderId=${orderId}&status=${orderStatus}`
+      );
+    }
 
   } catch (error) {
     console.error("Error verifying order:", error);
@@ -138,13 +127,10 @@ juspayRouter.post('/response', async (req, res) => {
 // ---------------------------------------------
 // Generate Receipt
 // ---------------------------------------------
-
-
 juspayRouter.get('/receipt/:orderId', async (req, res) => {
   const { orderId } = req.params;
 
   try {
-    // Fetch order & enrich with Juspay status
     const localOrder = await Order.findOne({ orderId }).populate('user course');
     if (!localOrder) return res.status(404).json({ error: 'Order not found' });
 
@@ -179,15 +165,13 @@ juspayRouter.get('/receipt/:orderId', async (req, res) => {
     };
 
     return res.status(200).json({ success: true, receipt });
-//  return res.redirect(`https://courses.arcite.in/receipt/${orderId}`);
-
- 
 
   } catch (err) {
     console.error("Error fetching receipt:", err);
     return res.status(500).json({ error: "Could not generate receipt" });
   }
 });
+
 // ---------------------------------------------
 // Helper: Clean Juspay response
 // ---------------------------------------------

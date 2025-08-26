@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // or useRouter in Next.js
+import { useParams } from 'react-router-dom'; // Next.js: useRouter
 import axios from 'axios';
 
 const ReceiptPage = () => {
-  const { orderId } = useParams(); // for Next.js: const router = useRouter(); const { orderId } = router.query;
+  const { orderId } = useParams();
   const [receipt, setReceipt] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -18,7 +18,7 @@ const ReceiptPage = () => {
           setError('Receipt not found or payment incomplete');
         }
       } catch (err) {
-        setError(err,'Error fetching receipt');
+        setError(err.response?.data?.error || 'Error fetching receipt');
       } finally {
         setLoading(false);
       }
@@ -27,30 +27,32 @@ const ReceiptPage = () => {
     if (orderId) fetchReceipt();
   }, [orderId]);
 
-  if (loading) return <div className="p-4 text-gray-600">Loading receipt...</div>;
-  if (error) return <div className="p-4 text-red-500">{error}</div>;
+  if (loading) return <div className="p-6 text-gray-600">Loading receipt...</div>;
+  if (error) return <div className="p-6 text-red-600">{error}</div>;
   if (!receipt) return null;
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-md rounded-xl border border-gray-200">
-      <h2 className="text-2xl font-bold mb-4 text-green-700">Payment Receipt</h2>
+    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl border border-gray-300">
+      <h2 className="text-2xl font-bold mb-6 text-green-700 border-b pb-2">
+        Payment Receipt
+      </h2>
 
-      <div className="mb-4 text-gray-800">
+      <div className="mb-6 text-gray-800 space-y-1">
         <p><strong>Receipt ID:</strong> {receipt.receiptId}</p>
         <p><strong>Order ID:</strong> {receipt.orderId}</p>
         <p><strong>Transaction ID:</strong> {receipt.transactionId}</p>
         <p><strong>Status:</strong> {receipt.status}</p>
-        <p><strong>Paid On:</strong> {new Date(receipt.paidOn).toLocaleString()}</p>
+        <p><strong>Paid On:</strong> {receipt.paidOn ? new Date(receipt.paidOn).toLocaleString() : 'N/A'}</p>
       </div>
 
-      <div className="mb-4 text-gray-800">
+      <div className="mb-6 text-gray-800">
         <h4 className="font-semibold text-lg mb-2">Customer Details</h4>
         <p><strong>Name:</strong> {receipt.customer.name}</p>
         <p><strong>Email:</strong> {receipt.customer.email}</p>
         <p><strong>Phone:</strong> {receipt.customer.phone}</p>
       </div>
 
-      <div className="mb-4 text-gray-800">
+      <div className="mb-6 text-gray-800">
         <h4 className="font-semibold text-lg mb-2">Payment Details</h4>
         <p><strong>Amount Paid:</strong> {receipt.amountPaid}</p>
         <p><strong>Payment Method:</strong> {receipt.paymentMethod}</p>
@@ -61,12 +63,12 @@ const ReceiptPage = () => {
         <p><strong>Bank Txn ID:</strong> {receipt.bankTxnId}</p>
       </div>
 
-      <div className="mt-6 text-center">
+      <div className="mt-8 text-center">
         <button
           onClick={() => window.print()}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          className="bg-blue-600 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700"
         >
-          Download Receipt
+          Download / Print Receipt
         </button>
       </div>
     </div>
