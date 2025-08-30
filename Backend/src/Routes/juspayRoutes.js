@@ -47,7 +47,7 @@ juspayRouter.post('/initiate', async (req, res) => {
     }
 
     // const amount = course.fee || course.amount || 1000;
-    const amount = 12;
+    const amount = 5500;
     const coursename = course.name || course.title || "Course Payment";
 
     // Create Juspay order session
