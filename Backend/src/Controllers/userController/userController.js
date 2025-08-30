@@ -124,7 +124,7 @@ const googleLogin = async (req, res) => {
               message: "Success",
           });
       } else {
-          return res.status(401).json({ error: "Invalid Email and Password" });
+          return res.status(401).json({ error: "Please register before logging in with Google." });
       }
   } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });
