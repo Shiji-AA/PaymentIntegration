@@ -5,7 +5,8 @@ import mongoose from "mongoose";
 import User from '../../model/userModel.js';
 import bcrypt from 'bcryptjs';
 import Course from '../../model/courseModel.js';
-import Category from '../../model/categoryModel.js'
+import Category from '../../model/categoryModel.js';
+import Order from '../../model/orderModel.js';
 
 
 const adminLogin = async (req, res) => {
@@ -309,8 +310,44 @@ const deleteCategory = async(req,res)=>{
     return res.status(500).json({ message: "An error occurred. Please try again later." });  
   }  
 }
+const getAllStudents = async (req, res) => {
+  try {
+      const studentDetails = await Order.find()
+      .populate("course", "courseName department") // populate course name and department
+      .populate("user", "firstName lastName email phone"); // optional: populate user details
 
+    if (studentDetails && studentDetails.length > 0) {
+      return res.status(200).json({
+        students: studentDetails,
+        message: "Student registration details fetched successfully",
+      });
+    } else {
+      return res.status(404).json({
+        message: "No students have registered yet.",
+        students: [],
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    return res.status(500).json({
+      message: "An error occurred. Please try again later.",
+      error: error.message,
+    });
+  }
+};
 
-    
+ export {
+  adminLogin,
+  addcourse,
+  getAllCources,
+  getCourseById,
+  editCourse,
+  deleteCourse,
+  addCategory,
+  getAllCategory,
+  getCategoryById,
+  editCategory,
+  deleteCategory,
+  getAllStudents
+};
 
-export {adminLogin,addcourse,getAllCources,getCourseById,editCourse,deleteCourse,addCategory,getAllCategory,getCategoryById,editCategory,deleteCategory}

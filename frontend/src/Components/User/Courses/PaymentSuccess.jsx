@@ -5,7 +5,7 @@ const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get("orderId");
   const amount = searchParams.get("amount");
-  const status = searchParams.get("status");
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -19,10 +19,7 @@ const PaymentSuccess = () => {
         </p>
         <p className="text-gray-700 mb-2">
           <strong>Amount Paid:</strong> <span className="text-gray-900">₹{amount}</span>
-        </p>
-        <p className="text-gray-700 mb-4">
-          <strong>Status:</strong> <span className="text-gray-900">{status}</span>
-        </p>
+        </p>     
         <div className="mt-6">
           <a
             href="/"

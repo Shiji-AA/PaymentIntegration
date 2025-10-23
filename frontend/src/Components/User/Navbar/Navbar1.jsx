@@ -242,14 +242,15 @@ function Navbar1() {
             </Link>
           </div>
         </div>
-        {user && (
-          <button
-            onClick={handleLogout}
-            className="bg-teal-400 text-black font-semibold hover:text-white hover:bg-teal-600  py-2 rounded"
-          >
-            Logout
-          </button>
-        )}
+     {user && (
+  <button
+    onClick={handleLogout}
+    className="hidden xl:inline-block bg-teal-400 text-black font-semibold hover:text-white hover:bg-teal-600 py-1 px-2 ml-5 rounded"
+  >
+    Logout
+  </button>
+)}
+
 
         {/* Right Section: Menu Icon + Hamburger */}
         <div className="flex items-center space-x-4 ml-auto">

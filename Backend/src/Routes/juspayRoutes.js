@@ -2,7 +2,7 @@ import express from 'express';
 import juspay from '../config/juspayConfig.js';
 import Order from '../model/orderModel.js';
 import Course from '../model/courseModel.js';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
 const juspayRouter = express.Router();
@@ -18,36 +18,46 @@ const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:4000';
 // ---------------------------------------------
 juspayRouter.post('/initiate', async (req, res) => {
   const {
-    customerId = 'demo_customer',
+    customerId,
     userId,
     courseId,
-    campus = 'Kochi',
+    campusOpted,
+    customerName,
+    customerEmail,
+    customerPhone,
+    collegeName,
+    joiningBatch,
+    dayScholarOrHosteler,
+    hasLaptop,
+    whatsapp,
+    // amount,
   } = req.body;
+
+  const amount = 12;
+  // Validate required fields
+  if (!customerId || !userId || !courseId || !customerName || !customerEmail || !customerPhone || !amount) {
+    return res.status(400).json({ error: "Missing required fields." });
+  }
 
   const orderId = req.body.orderId || `order_${Date.now()}`;
   const returnUrl = ALLOWED_RETURN_URL;
 
-  if (returnUrl !== ALLOWED_RETURN_URL) {
-    return res.status(400).json({ error: "Invalid return URL" });
-  }
-
-  if (!userId || !courseId) {
-    return res.status(400).json({ error: "Missing required fields: userId or courseId" });
-  }
-
   try {
+    // Check for duplicate order
     const existingOrder = await Order.findOne({ orderId });
     if (existingOrder) {
       return res.status(400).json({ error: "Duplicate orderId. Please try again." });
     }
 
+    // Fetch course
     const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ error: "Invalid course ID" });
     }
 
-    const amount = course.fee || course.amount || 1000;    
-    const coursename = course.name || course.title || "Course Payment";
+    const coursename = course.courseName || "Course Payment";
+    const firstName = customerName.trim();
+    const lastName = "-"; // placeholder since you only have full name
 
     // Create Juspay order session
     const session = await juspay.orderSession.create({
@@ -58,10 +68,10 @@ juspayRouter.post('/initiate', async (req, res) => {
       action: 'paymentPage',
       return_url: returnUrl,
       currency: 'INR',
-      first_name: req.body.firstName || 'John',
-      last_name: req.body.lastName || 'Doe',
-      customer_email: req.body.customerEmail || 'test@mail.com',
-      customer_phone: req.body.customerPhone || '9876543210',
+      first_name: firstName,
+      last_name: lastName,
+      customer_email: customerEmail,
+      customer_phone: customerPhone,
       description: `Payment for ${coursename}`,
     });
 
@@ -71,10 +81,19 @@ juspayRouter.post('/initiate', async (req, res) => {
       user: userId,
       course: courseId,
       coursename,
-      campus,
+      campusOpted,
       amount,
       status: 'CREATED',
       paymentMethod: 'juspay',
+      enrolled: false,
+      customerName,
+      customerEmail,
+      customerPhone,
+      collegeName,
+      joiningBatch,
+      dayScholarOrHosteler,
+      hasLaptop,
+      whatsapp,
     });
 
     if (session.http) delete session.http;
@@ -96,20 +115,31 @@ juspayRouter.post('/response', async (req, res) => {
 
   try {
     const statusResponse = await juspay.order.status(orderId);
-    const orderStatus = statusResponse.status;
+    const orderStatus = (statusResponse.status || '').toUpperCase();
     const amount = statusResponse.amount;
+    const isEnrolled = orderStatus === 'CHARGED';
+    const txnId = statusResponse?.txn_detail?.txn_id || null;
 
-    // Update order in DB
-    await Order.findOneAndUpdate(
-      { orderId },
-      { status: orderStatus },
-      { new: true }
-    );
+    // Update order in DB 
+
+    const updatedOrder = await Order.findOneAndUpdate(
+  { orderId },
+  {
+    status: orderStatus,
+    enrolled: isEnrolled,
+    enrolledAt: isEnrolled ? new Date() : null,   
+    paymentId: txnId,    
+  },
+  { new: true }
+);
+console.log("Updated Order:", updatedOrder);
+
+
 
     // Redirect user to frontend with query params
     if (orderStatus === "CHARGED") {
       return res.redirect(
-        `${FRONTEND_URL}/payment/success?orderId=${orderId}&amount=${amount}&status=${orderStatus}`
+        `${FRONTEND_URL}/payment/success?orderId=${orderId}&amount=${amount}`
       );
     } else {
       return res.redirect(
@@ -152,7 +182,7 @@ juspayRouter.get('/receipt/:orderId', async (req, res) => {
       cardIssuer: card.card_issuer || '',
       cardType: card.extended_card_type || '',
       customer: {
-        name: card.name_on_card || localOrder.user?.name || 'N/A',
+        name: card.name_on_card || localOrder.customerName || 'N/A',
         email: juspayDetails.customer_email,
         phone: juspayDetails.customer_phone,
       },
@@ -170,14 +200,5 @@ juspayRouter.get('/receipt/:orderId', async (req, res) => {
     return res.status(500).json({ error: "Could not generate receipt" });
   }
 });
-
-// ---------------------------------------------
-// Helper: Clean Juspay response
-// ---------------------------------------------
-function makeJuspayResponse(successRspFromJuspay) {
-  if (!successRspFromJuspay) return {};
-  if (successRspFromJuspay.http) delete successRspFromJuspay.http;
-  return successRspFromJuspay;
-}
 
 export default juspayRouter;

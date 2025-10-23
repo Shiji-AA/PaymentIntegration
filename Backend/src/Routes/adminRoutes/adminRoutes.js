@@ -1,7 +1,10 @@
 import express from "express";
 const adminRouter = express.Router();
 
-import { addCategory, addcourse, adminLogin, deleteCategory, deleteCourse, editCategory, editCourse, getAllCategory, getAllCources, getCategoryById, getCourseById,  } from "../../Controllers/adminController/adminController.js";
+import { addCategory, addcourse, adminLogin, deleteCategory, 
+    deleteCourse, editCategory, editCourse,
+     getAllCategory, getAllCources, getAllStudents, 
+    getCategoryById, getCourseById,  } from "../../Controllers/adminController/adminController.js";
 
 
 
@@ -21,5 +24,7 @@ adminRouter.get("/getallcategory1/:id", getCategoryById);
 adminRouter.put("/editcategory/:id", editCategory);
 adminRouter.delete("/deletecategory/:id", deleteCategory);
 
+//students
+adminRouter.get("/getallstudents", getAllStudents);
 
 export default adminRouter;
