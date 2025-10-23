@@ -18,7 +18,7 @@ function ElectricalHero() {
 
       {/* Centered Content */}
       <div className="relative text-center">
-        <h1 className="text-5xl md:text-6xl font-bold">Electrical engineering</h1>
+        <h1 className="text-5xl md:text-6xl font-bold">Electrical Engineering</h1>
         
         {/* Breadcrumb Navigation */}
               <nav className="mt-2 text-lg flex items-center justify-center gap-2">

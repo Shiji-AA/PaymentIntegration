@@ -18,7 +18,7 @@ function MechanicalHero() {
 
       {/* Centered Content */}
       <div className="relative text-center">
-        <h1 className="text-5xl md:text-6xl font-bold">Mechanical engineering</h1>
+        <h1 className="text-5xl md:text-6xl font-bold">Mechanical Engineering</h1>
         
             <nav className="mt-2 text-lg flex items-center justify-center gap-2">
       <a
