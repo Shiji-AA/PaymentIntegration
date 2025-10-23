@@ -23,10 +23,9 @@ const orderSchema = new Schema(
       type: String,
       required: true,
     },
-    campus: {
+    campusOpted: {
       type: String,
-      enum: ["Kottiyam", "Kadappakkada", "Kochi"],
-      default: "Kochi",
+      enum: ["Kottiyam", "Kadappakkada", "Kochi", "Online"],
       required: true,
     },
     amount: {
@@ -54,11 +53,22 @@ const orderSchema = new Schema(
     enrolledAt: {
       type: Date,
     },
+
+    // Add these to store full payment info
+    customerName: { type: String },
+    customerEmail: { type: String },
+    customerPhone: { type: String },
+    collegeName: { type: String },
+    joiningBatch: { type: String },
+    dayScholarOrHosteler: { type: String },
+    hasLaptop: { type: String },
+    whatsapp: { type: String },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
+
 
 const Order = model("Order", orderSchema);
 

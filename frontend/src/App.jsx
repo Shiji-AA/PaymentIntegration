@@ -24,6 +24,7 @@ import EnrollmentPage from "./Pages/user/EnrollmentPage";
 import PaymentSuccess from "./Components/User/Courses/PaymentSuccess";
 import ReceiptPage from "./Components/User/Enrollment/ReceiptPage";
 import PaymentFailure from "./Components/User/Courses/PaymentFailure";
+import StudentsList from "./Components/Admin/StudentsList/StudentsList";
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/getallcategory" element={< CategoryList/>} />      
         <Route path="/addcategory" element={<AddCategory/>} />
         <Route path="/editcategory/:id" element={<EditCategory/>} />
+         <Route path="/getallstudents" element={<StudentsList />} />
         </Route>
    
 

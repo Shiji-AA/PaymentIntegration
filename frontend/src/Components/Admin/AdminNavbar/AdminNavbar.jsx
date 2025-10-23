@@ -52,7 +52,15 @@ function AdminNavbar() {
               className="font-semibold block md:inline-block text-gray-900 hover:text-tealLight px-3 py-3 border-b-2 border-gray-900-900 md:border-none"
             >
               Dashboard
-            </a>       
+            </a>   
+
+             <a
+              href="/getallstudents"
+              className=" font-semibold block md:inline-block text-gray-900 hover:text-tealLight px-3 py-3 border-b-2 border-gray-900-900 md:border-none"
+            >
+              Students List
+            </a>  
+
               <a
               href="/getallcourses"
               className=" font-semibold block md:inline-block text-gray-900 hover:text-tealLight px-3 py-3 border-b-2 border-gray-900-900 md:border-none"
