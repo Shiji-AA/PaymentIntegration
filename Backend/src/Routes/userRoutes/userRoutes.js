@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getAllCources,
   getAllCources1,
   getCourseById1,
   googleLogin,
@@ -16,6 +17,7 @@ router.post("/login", loginUser);
 router.post('/google/register',googleRegister);
 router.post("/google/login", googleLogin);
 router.get("/getallcoursesuser", getAllCources1);
+router.get("/getallcoursesuser1", getAllCources);
 router.get("/getcoursebyiduser/:id", getCourseById1);
 
 
