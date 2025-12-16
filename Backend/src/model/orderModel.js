@@ -8,11 +8,12 @@ const orderSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      index: true,
     },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: false,
     },
     course: {
       type: Schema.Types.ObjectId,
@@ -39,7 +40,17 @@ const orderSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["CREATED", "INITIATED", "CHARGED", "PENDING", "FAILED", "AUTHORIZATION_FAILED", "AUTHENTICATION_FAILED"],
+      enum: [  
+    "CREATED",
+    "NEW",
+    "PENDING",
+    "PENDING_VBV",
+    "CHARGED",
+    "FAILED",
+    "AUTHORIZATION_FAILED",
+    "AUTHENTICATION_FAILED",
+    "CANCELLED"
+    ],
       default: "CREATED",
     },
     paymentMethod: {
@@ -52,6 +63,7 @@ const orderSchema = new Schema(
     },
     enrolledAt: {
       type: Date,
+      default: null,
     },
 
     // Add these to store full payment info
@@ -63,6 +75,13 @@ const orderSchema = new Schema(
     dayScholarOrHosteler: { type: String },
     hasLaptop: { type: String },
     whatsapp: { type: String },
+
+      // Store full Juspay response (VERY useful)
+    juspayResponse: {
+      type: Object,
+      default: null,
+    },
+    
   },
   {
     timestamps: true,

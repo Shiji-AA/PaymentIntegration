@@ -13,6 +13,7 @@ const StudentsList = () => {
     axiosInstanceAdmin
       .get("/getallstudents")
       .then((response) => {
+        console.log(response.data,"Response from Admin Dashboard")
         if (response.data.students) {
           setStudentDetails(response.data.students);
         }
@@ -82,7 +83,7 @@ const StudentsList = () => {
                 filename={"students_list.csv"}
                 className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
               >
-                Download CSV
+                Download
               </CSVLink>
             </div>
 
@@ -102,6 +103,7 @@ const StudentsList = () => {
                     <th className="p-3 text-left">DayScholar/ <br/>Hostler</th>
                     <th className="p-3 text-left">Laptop</th>
                     <th className="p-3 text-left">Amount</th>
+                    <th className="p-3 text-left">Payment Status</th>
                     <th className="p-3 text-left">Registration Date</th>
                   </tr>
                 </thead>
@@ -126,6 +128,7 @@ const StudentsList = () => {
                         <td className="p-3">{student.dayScholarOrHosteler}</td>
                         <td className="p-3">{student.hasLaptop ? "Yes" : "No"}</td>
                         <td className="p-3">₹{student.amount}</td>
+                        <td className="p-3">₹{student.status}</td>
                         <td className="p-3">
                           {new Date(student.createdAt).toLocaleDateString()}
                         </td>

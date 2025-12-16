@@ -20,11 +20,11 @@ import RefundPolicy from "./Components/User/Policy/RefundPolicy";
 import PrivacyPolicy from "./Components/User/Policy/PrivacyPolicy";
 import TermsnConditions from "./Components/User/Policy/TermsnConditions";
 import SoftwarePage from "./Pages/user/SoftwarePage";
-import EnrollmentPage from "./Pages/user/EnrollmentPage";
 import PaymentSuccess from "./Components/User/Courses/PaymentSuccess";
 import ReceiptPage from "./Components/User/Enrollment/ReceiptPage";
 import PaymentFailure from "./Components/User/Courses/PaymentFailure";
 import StudentsList from "./Components/Admin/StudentsList/StudentsList";
+import EnrollmentForm from "./Components/User/Courses/EnrollmentForm";
 
 
 function App() {
@@ -35,6 +35,7 @@ function App() {
       <Routes>
         {/* ADMIN SIDE */}
         <Route path="/adminLogin" element={<AdminLogin />} />
+        <Route path="/enroll" element={<EnrollmentForm/>} />
         <Route element={<PrivatePageAdmin />}>
         <Route path="/admindashboard" element={<AdminDashboardPage />} />
         <Route path="/getallcourses" element={<CourseList />} />
@@ -61,13 +62,9 @@ function App() {
         <Route path="/electrical" element={<ElectricalEngineering />} />
         <Route path="/mechanical" element={<MechanicalEngineering />} />      
         <Route path="/software" element={<SoftwarePage/>} />
-        <Route path="/courseDetailPage/:id" element={<CourseDetailPage/>} />
-        <Route path="/enroll" element={<EnrollmentPage/>} />
+        <Route path="/courseDetailPage/:id" element={<CourseDetailPage/>} />      
         <Route path="/receipt/:orderId" element={<ReceiptPage/>} />
-        
-      
-
-        {/* </Route>  */}
+          {/* </Route>  */}
 
        </Routes>
     </Router>

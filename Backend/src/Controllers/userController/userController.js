@@ -159,6 +159,30 @@ const googleLogin = async (req, res) => {
           };
 
 
+// Controller to fetch all courses for enrollment page
+const getAllCources = async (req, res) => {
+  try {
+    // Fetch all courses
+    const courseDetails = await Course.find();
+
+    if (courseDetails.length > 0) {
+      return res.status(200).json({
+        courseDetails,
+        message: "Courses fetched successfully",
+      });
+    } else {
+      return res.status(404).json({
+        message: "No courses available in the database",
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    return res.status(500).json({
+      message: "An error occurred while fetching courses. Please try again later.",
+    });
+  }
+};
+
             // to get course details as per id
           const getCourseById1 = async (req, res) => {
             const courseId = req.params.id;
@@ -188,6 +212,8 @@ const googleLogin = async (req, res) => {
 
 
 
+
+
   
-  export { registerUser ,loginUser,getAllCources1,getCourseById1,googleLogin,googleRegister};
+  export { registerUser ,loginUser,getAllCources,getAllCources1,getCourseById1,googleLogin,googleRegister};
   
