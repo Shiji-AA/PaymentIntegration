@@ -3,6 +3,8 @@ import { axiosInstance, axiosInstancePayment } from "../../../api/axiosInstance"
 import { useSelector } from "react-redux";
 import arrow from "../../../assets/icons/arrow.png";
 import toast from "react-hot-toast";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 function EnrollmentForm() {
   const [courseDetails, setCourseDetails] = useState([]);
@@ -48,6 +50,11 @@ function EnrollmentForm() {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
+  const handlePhoneChange = (value, field) => {
+    setPaymentDetails((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
+  };
+
   const validateFields = () => {
     const requiredFields = [
       "name",
@@ -70,17 +77,23 @@ function EnrollmentForm() {
       }
     });
 
-    // Step 2: Email and phone validation
+    // Step 2: Email validation
     if (paymentDetails.email && !/\S+@\S+\.\S+/.test(paymentDetails.email)) {
       newErrors.email = "Invalid email format";
     }
 
-    const phone = paymentDetails.phone.trim();
-    if (phone && !/^[0-9]{10}$/.test(phone)) {
-      newErrors.phone = "Phone number must be 10 digits";
+    // Step 3: Phone validation (at least 10 digits after country code)
+    const phone = paymentDetails.phone.replace(/\D/g, '');
+    if (phone && phone.length < 10) {
+      newErrors.phone = "Phone number must be at least 10 digits";
     }
 
-    // Step 3: Course selection check
+    const whatsapp = paymentDetails.whatsapp.replace(/\D/g, '');
+    if (whatsapp && whatsapp.length < 10) {
+      newErrors.whatsapp = "WhatsApp number must be at least 10 digits";
+    }
+
+    // Step 4: Course selection check
     if (!selectedCourse) {
       newErrors["course"] = "Please select a course";
     }
@@ -165,42 +178,112 @@ function EnrollmentForm() {
             Course Enrollment Form
           </h2>
 
-    
-       {/* Amount */}
-<div className="mb-6">
-  <label className="block text-gray-700 font-medium mb-1">Amount</label>
-  <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 bg-gray-50">
-    <span className="text-lg font-semibold text-gray-700 mr-1">₹</span>
-    <span className="text-lg font-bold text-gray-800">
-      {paymentDetails.amount.toLocaleString("en-IN", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}
-    </span>
-  </div>
-</div>
-
-
-          {/* Name, Email, Whatsapp */}
-          {[
-            { label: "Name", name: "name", type: "text" },
-            { label: "Email", name: "email", type: "email" },
-            { label: "Whatsapp Number", name: "whatsapp", type: "text" },
-            { label: "Phone", name: "phone", type: "text" },
-            { label: "College Name", name: "collegeName", type: "text" },
-          ].map((f) => (
-            <div key={f.name} className="mb-4">
-              <label className="block text-gray-700 font-medium">{f.label}</label>
-              <input
-                type={f.type}
-                name={f.name}
-                value={paymentDetails[f.name]}
-                onChange={handlePaymentChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
-              />
-              {errors[f.name] && <p className="text-red-500 text-sm">{errors[f.name]}</p>}
+          {/* Amount */}
+          <div className="mb-6">
+            <label className="block text-gray-700 font-medium mb-1">Amount</label>
+            <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 bg-gray-50">
+              <span className="text-lg font-semibold text-gray-700 mr-1">₹</span>
+              <span className="text-lg font-bold text-gray-800">
+                {paymentDetails.amount.toLocaleString("en-IN", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
             </div>
-          ))}
+          </div>
+
+          {/* Name */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={paymentDetails.name}
+              onChange={handlePaymentChange}
+              className="w-full border border-gray-300 rounded-md px-3 py-2"
+            />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          </div>
+
+          {/* Email */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={paymentDetails.email}
+              onChange={handlePaymentChange}
+              className="w-full border border-gray-300 rounded-md px-3 py-2"
+            />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+          </div>
+
+          {/* WhatsApp Number with Country Code */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-1">WhatsApp Number</label>
+            <PhoneInput
+              country={'in'}
+              value={paymentDetails.whatsapp}
+              onChange={(value) => handlePhoneChange(value, 'whatsapp')}
+              inputStyle={{
+                width: '100%',
+                height: '42px',
+                fontSize: '16px',
+                paddingLeft: '48px',
+                borderRadius: '6px',
+                border: '1px solid #d1d5db'
+              }}
+              containerStyle={{
+                width: '100%'
+              }}
+              buttonStyle={{
+                borderRadius: '6px 0 0 6px',
+                border: '1px solid #d1d5db',
+                backgroundColor: '#f9fafb'
+              }}
+            />
+            {errors.whatsapp && <p className="text-red-500 text-sm">{errors.whatsapp}</p>}
+          </div>
+
+          {/* Phone Number with Country Code */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-1">Phone</label>
+            <PhoneInput
+              country={'in'}
+              value={paymentDetails.phone}
+              onChange={(value) => handlePhoneChange(value, 'phone')}
+              inputStyle={{
+                width: '100%',
+                height: '42px',
+                fontSize: '16px',
+                paddingLeft: '48px',
+                borderRadius: '6px',
+                border: '1px solid #d1d5db'
+              }}
+              containerStyle={{
+                width: '100%'
+              }}
+              buttonStyle={{
+                borderRadius: '6px 0 0 6px',
+                border: '1px solid #d1d5db',
+                backgroundColor: '#f9fafb'
+              }}
+            />
+            {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+          </div>
+
+          {/* College Name */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium">College Name</label>
+            <input
+              type="text"
+              name="collegeName"
+              value={paymentDetails.collegeName}
+              onChange={handlePaymentChange}
+              className="w-full border border-gray-300 rounded-md px-3 py-2"
+            />
+            {errors.collegeName && <p className="text-red-500 text-sm">{errors.collegeName}</p>}
+          </div>
 
           {/* Course Dropdown */}
           <div className="mb-4">

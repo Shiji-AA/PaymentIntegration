@@ -35,7 +35,7 @@ function App() {
       <Routes>
         {/* ADMIN SIDE */}
         <Route path="/adminLogin" element={<AdminLogin />} />
-        <Route path="/enroll" element={<EnrollmentForm/>} />
+        <Route path="/enroll" element={<EnrollmentForm/>}/>
         <Route element={<PrivatePageAdmin />}>
         <Route path="/admindashboard" element={<AdminDashboardPage />} />
         <Route path="/getallcourses" element={<CourseList />} />

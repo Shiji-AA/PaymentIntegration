@@ -4,6 +4,7 @@ import Order from "../model/orderModel.js";
 import Course from "../model/courseModel.js";
 import dotenv from "dotenv";
 
+
 dotenv.config();
 const router = express.Router();
 
@@ -33,14 +34,18 @@ router.post("/initiate", async (req, res) => {
       dayScholarOrHosteler,
       hasLaptop,
       whatsapp,
-      amount,
+     // amount,
     } = req.body;
 
-    //const amount = 15;
+    const amount = 15;
 
-    if (!orderId || !courseId || !customerName || !customerEmail || !customerPhone) {
+       
+    if (
+      !orderId || !courseId || !customerName || !customerEmail || !customerPhone ||
+      !campusOpted || !collegeName || !joiningBatch || !dayScholarOrHosteler || !hasLaptop || !whatsapp) {
       return res.status(400).json({ error: "Missing required fields" });
     }
+
 
     const existing = await Order.findOne({ orderId });
     if (existing) {
@@ -51,6 +56,7 @@ router.post("/initiate", async (req, res) => {
     if (!course) {
       return res.status(404).json({ error: "Invalid course" });
     }
+
 
     const session = await juspay.orderSession.create({
       order_id: orderId,
