@@ -4,6 +4,8 @@ import { axiosInstance, axiosInstancePayment } from "../../../api/axiosInstance"
 import arrow from "../../../assets/icons/arrow.png";
 import cat4 from "../../../assets/hero.jpg";
 import { useSelector } from "react-redux";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 function CourseDetails() {
   const { id } = useParams();
@@ -57,7 +59,12 @@ function CourseDetails() {
       ...prev,
       [name]: value,
     }));
-    setErrors((prev) => ({ ...prev, [name]: "" })); // clear error on change
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const handlePhoneChange = (value, field) => {
+    setPaymentDetails((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
   const validateFields = () => {
@@ -79,6 +86,22 @@ function CourseDetails() {
         newErrors[field] = "This field is required";
       }
     });
+
+    // Email validation
+    if (paymentDetails.email && !/\S+@\S+\.\S+/.test(paymentDetails.email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    // Phone validation (at least 10 digits after country code)
+    const phone = paymentDetails.phone.replace(/\D/g, '');
+    if (phone && phone.length < 10) {
+      newErrors.phone = "Phone number must be at least 10 digits";
+    }
+
+    const whatsapp = paymentDetails.whatsapp.replace(/\D/g, '');
+    if (whatsapp && whatsapp.length < 10) {
+      newErrors.whatsapp = "WhatsApp number must be at least 10 digits";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -187,34 +210,120 @@ function CourseDetails() {
               <div className="pt-4 space-y-3">
                 <h2 className="text-xl font-semibold mb-2">Payment Details</h2>
 
-                {/** Render input fields dynamically */}
-                {[
-                  { label: "Amount", name: "amount", type: "text", readOnly: true },
-                  { label: "Name", name: "name", type: "text" },
-                  { label: "Email", name: "email", type: "email" },
-                  { label: "Whatsapp Number", name: "whatsapp", type: "text" },
-                  { label: "Phone", name: "phone", type: "text" },
-                  { label: "College Name", name: "collegeName", type: "text" },
-                ].map((field) => (
-                  <div key={field.name}>
-                    <label className="block text-gray-700 font-medium">{field.label}</label>
-                    <input
-                      type={field.type}
-                      name={field.name}
-                      value={
-                        field.readOnly
-                          ? `₹${paymentDetails.amount.toFixed(2)}`
-                          : paymentDetails[field.name]
-                      }
-                      onChange={handlePaymentChange}
-                      readOnly={field.readOnly}
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
-                    />
-                    {errors[field.name] && (
-                      <span className="text-red-500 text-sm">{errors[field.name]}</span>
-                    )}
-                  </div>
-                ))}
+                {/* Amount Field */}
+                <div>
+                  <label className="block text-gray-700 font-medium">Amount</label>
+                  <input
+                    type="text"
+                    name="amount"
+                    value={`₹${paymentDetails.amount.toFixed(2)}`}
+                    readOnly
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50"
+                  />
+                </div>
+
+                {/* Name Field */}
+                <div>
+                  <label className="block text-gray-700 font-medium">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={paymentDetails.name}
+                    onChange={handlePaymentChange}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  />
+                  {errors.name && (
+                    <span className="text-red-500 text-sm">{errors.name}</span>
+                  )}
+                </div>
+
+                {/* Email Field */}
+                <div>
+                  <label className="block text-gray-700 font-medium">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={paymentDetails.email}
+                    onChange={handlePaymentChange}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  />
+                  {errors.email && (
+                    <span className="text-red-500 text-sm">{errors.email}</span>
+                  )}
+                </div>
+
+                {/* WhatsApp Number with Country Code */}
+                <div>
+                  <label className="block text-gray-700 font-medium mb-1">WhatsApp Number</label>
+                  <PhoneInput
+                    country={'in'}
+                    value={paymentDetails.whatsapp}
+                    onChange={(value) => handlePhoneChange(value, 'whatsapp')}
+                    inputStyle={{
+                      width: '100%',
+                      height: '42px',
+                      fontSize: '16px',
+                      paddingLeft: '48px',
+                      borderRadius: '6px',
+                      border: '1px solid #d1d5db'
+                    }}
+                    containerStyle={{
+                      width: '100%'
+                    }}
+                    buttonStyle={{
+                      borderRadius: '6px 0 0 6px',
+                      border: '1px solid #d1d5db',
+                      backgroundColor: '#f9fafb'
+                    }}
+                  />
+                  {errors.whatsapp && (
+                    <span className="text-red-500 text-sm">{errors.whatsapp}</span>
+                  )}
+                </div>
+
+                {/* Phone Number with Country Code */}
+                <div>
+                  <label className="block text-gray-700 font-medium mb-1">Phone</label>
+                  <PhoneInput
+                    country={'in'}
+                    value={paymentDetails.phone}
+                    onChange={(value) => handlePhoneChange(value, 'phone')}
+                    inputStyle={{
+                      width: '100%',
+                      height: '42px',
+                      fontSize: '16px',
+                      paddingLeft: '48px',
+                      borderRadius: '6px',
+                      border: '1px solid #d1d5db'
+                    }}
+                    containerStyle={{
+                      width: '100%'
+                    }}
+                    buttonStyle={{
+                      borderRadius: '6px 0 0 6px',
+                      border: '1px solid #d1d5db',
+                      backgroundColor: '#f9fafb'
+                    }}
+                  />
+                  {errors.phone && (
+                    <span className="text-red-500 text-sm">{errors.phone}</span>
+                  )}
+                </div>
+
+                {/* College Name Field */}
+                <div>
+                  <label className="block text-gray-700 font-medium">College Name</label>
+                  <input
+                    type="text"
+                    name="collegeName"
+                    value={paymentDetails.collegeName}
+                    onChange={handlePaymentChange}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  />
+                  {errors.collegeName && (
+                    <span className="text-red-500 text-sm">{errors.collegeName}</span>
+                  )}
+                </div>
 
                 {/* Dropdown fields */}
                 {[
