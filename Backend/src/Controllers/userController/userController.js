@@ -190,7 +190,7 @@ const getAllCources = async (req, res) => {
               const CourseDetails = await Course.findById(courseId).populate('department');
           
               if (CourseDetails) {
-z                res.status(200).json({
+                 res.status(200).json({
                   CourseDetails, // fixed variable name
                   message: "Course found successfully",
                 });
@@ -208,3 +208,4 @@ z                res.status(200).json({
           };         
        
 
+           export { registerUser ,loginUser,getAllCources,getAllCources1,getCourseById1,googleLogin,googleRegister};
