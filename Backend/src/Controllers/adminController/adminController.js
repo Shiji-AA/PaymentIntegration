@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import generateToken from '../../../Utils/generateToken.js'
+import generateToken from '../../../Utils/generateToken.mjs'
 import mongoose from "mongoose";
 import User from '../../model/userModel.js';
 import bcrypt from 'bcryptjs';
@@ -336,8 +336,18 @@ const getAllStudents = async (req, res) => {
   }
 };
 
-    
+ export {
+  adminLogin,
+  addcourse,
+  getAllCources,
+  getCourseById,
+  editCourse,
+  deleteCourse,
+  addCategory,
+  getAllCategory,
+  getCategoryById,
+  editCategory,
+  deleteCategory,
+  getAllStudents
+};
 
-export {adminLogin,addcourse,getAllCources,getCourseById,
-  editCourse,deleteCourse,addCategory,getAllCategory,getCategoryById,
-  editCategory,deleteCategory,getAllStudents}

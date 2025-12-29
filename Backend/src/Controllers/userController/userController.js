@@ -1,5 +1,5 @@
 import User from '../../model/userModel.js'
-import generateToken from "../../../Utils/generateToken.js"
+import generateToken from "../../../Utils/generateToken.mjs"
 import jwt from 'jsonwebtoken';
 import Course from '../../model/courseModel.js';
 
@@ -190,7 +190,7 @@ const getAllCources = async (req, res) => {
               const CourseDetails = await Course.findById(courseId).populate('department');
           
               if (CourseDetails) {
-                res.status(200).json({
+                 res.status(200).json({
                   CourseDetails, // fixed variable name
                   message: "Course found successfully",
                 });
@@ -208,12 +208,4 @@ const getAllCources = async (req, res) => {
           };         
        
 
-
-
-
-
-
-
-  
-  export { registerUser ,loginUser,getAllCources,getAllCources1,getCourseById1,googleLogin,googleRegister};
-  
+           export { registerUser ,loginUser,getAllCources,getAllCources1,getCourseById1,googleLogin,googleRegister};
