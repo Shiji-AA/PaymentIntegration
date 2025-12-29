@@ -34,10 +34,10 @@ router.post("/initiate", async (req, res) => {
       dayScholarOrHosteler,
       hasLaptop,
       whatsapp,
-     // amount,
+      amount,
     } = req.body;
 
-    const amount = 15;
+    //const amount = 15;
 
        
     if (
