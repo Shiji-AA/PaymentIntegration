@@ -8,7 +8,7 @@ import userRoutes from "./Routes/userRoutes/userRoutes.js";
 import adminRouter from "./Routes/adminRoutes/adminRoutes.js";
 import juspayConfig from "./config/juspayConfig.js"
 import juspayRouter from './Routes/juspayRoutes.js';
-console.log(juspayConfig.MERCHANT_ID); 
+//console.log("MERCHANT_ID:", process.env.MERCHANT_ID);
 
 dotenv.config();
 connectDB();
