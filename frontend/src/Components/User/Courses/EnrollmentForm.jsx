@@ -313,7 +313,7 @@ function EnrollmentForm() {
             {
               label: "Joining Batch",
               name: "joiningBatch",
-              options: ["August", "September", "October"],
+              options: ["January", "February", "March"],
             },
             {
               label: "DayScholar or Hosteler",
