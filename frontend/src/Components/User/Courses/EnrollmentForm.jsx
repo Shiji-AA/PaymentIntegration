@@ -13,7 +13,7 @@ function EnrollmentForm() {
   const [selectedCourse, setSelectedCourse] = useState("");
 
   const [paymentDetails, setPaymentDetails] = useState({
-    amount: 1000,
+    amount: 10000,
     name: "",
     email: "",
     whatsapp: "",
