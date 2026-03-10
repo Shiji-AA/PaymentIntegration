@@ -191,7 +191,7 @@ const getAllCources2 = async (req, res) => {
     // Fetch all courses
     const courseDetails = await Course.find({
      department: "6809bc5c897e30cf36cb8c47"
-    });
+    }).sort({ createdAt: -1 });
 
     if (courseDetails.length > 0) {
       return res.status(200).json({
