@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
-function EnrollmentForm() {
+function EarlyBirdRegisterForm() {
   const [courseDetails, setCourseDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState({});
@@ -29,7 +29,7 @@ function EnrollmentForm() {
 
   useEffect(() => {
     axiosInstance
-      .get("/getallcoursesuser1")
+      .get("/getallSoftwareCourses")
       .then((response) => {
         if (response.data?.courseDetails) {
           setCourseDetails(response.data.courseDetails);
@@ -153,7 +153,7 @@ function EnrollmentForm() {
             </h1>
 
             <h1 className="text-2xl font-bold mb-6">
-              Your First Offer Letter at ARCITE <br /> 2026–27
+              ARCITE Early Bird Registration <br /> 2026–27
             </h1>
 
             <p className="text-sm leading-relaxed text-gray-600">
@@ -359,4 +359,4 @@ function EnrollmentForm() {
   );
 }
 
-export default EnrollmentForm;
+export default EarlyBirdRegisterForm;

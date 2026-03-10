@@ -2,6 +2,7 @@ import User from '../../model/userModel.js'
 import generateToken from "../../../Utils/generateToken.mjs"
 import jwt from 'jsonwebtoken';
 import Course from '../../model/courseModel.js';
+import Category from '../../model/categoryModel.js';
 
 
 
@@ -183,6 +184,34 @@ const getAllCources = async (req, res) => {
   }
 };
 
+
+// Controller to fetch all courses for Early Bird Registration page
+const getAllCources2 = async (req, res) => {
+  try {
+    // Fetch all courses
+    const courseDetails = await Course.find({
+     department: "6809bc5c897e30cf36cb8c47"
+    });
+
+    if (courseDetails.length > 0) {
+      return res.status(200).json({
+        courseDetails,
+        message: "Courses fetched successfully",
+      });
+    } else {
+      return res.status(404).json({
+        message: "No courses available in the database",
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    return res.status(500).json({
+      message: "An error occurred while fetching courses. Please try again later.",
+    });
+  }
+};
+
+
             // to get course details as per id
           const getCourseById1 = async (req, res) => {
             const courseId = req.params.id;
@@ -208,4 +237,4 @@ const getAllCources = async (req, res) => {
           };         
        
 
-           export { registerUser ,loginUser,getAllCources,getAllCources1,getCourseById1,googleLogin,googleRegister};
+           export { registerUser ,loginUser,getAllCources,getAllCources1, getAllCources2, getCourseById1,googleLogin,googleRegister};

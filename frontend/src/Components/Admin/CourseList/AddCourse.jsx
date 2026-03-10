@@ -223,7 +223,9 @@ function AddCourse() {
                 <option value="2 months">2 Months</option>
                 <option value="3 months">3 Months</option>
                 <option value="4 months">4 Months</option>
+                <option value="5 months">5 Months</option>
                 <option value="6 months">6 Months</option>
+                <option value="7 months">7 Months</option>
                 <option value="1 year">1 Year</option>
               </select>
               {formik.touched.duration && formik.errors.duration && (
