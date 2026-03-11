@@ -14,7 +14,7 @@ function CourseDetails() {
   const [errors, setErrors] = useState({});
 
   const [paymentDetails, setPaymentDetails] = useState({
-    amount: 10000,
+    amount: 1000,
     name: "",
     email: "",
     whatsapp: "",
