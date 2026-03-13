@@ -13,7 +13,7 @@ function EarlyBirdRegisterForm() {
   const [selectedCourse, setSelectedCourse] = useState("");
 
   const [paymentDetails, setPaymentDetails] = useState({
-    amount: 1000,
+    amount: 12,
     name: "",
     email: "",
     whatsapp: "",
