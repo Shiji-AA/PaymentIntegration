@@ -37,7 +37,7 @@ router.post("/initiate", async (req, res) => {
       //amount,
     } = req.body;
 
-    const amount = 1000;
+    const amount = 15;
 
        
     if (
