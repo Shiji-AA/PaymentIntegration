@@ -178,8 +178,8 @@ function EarlyBirdRegisterForm() {
             Course Enrollment Form
           </h2>
 
-          {/* Amount */}
-          <div className="mb-6">
+          {/* Amount ************************/}
+          {/* <div className="mb-6">
             <label className="block text-gray-700 font-medium mb-1">Amount</label>
             <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 bg-gray-50">
               <span className="text-lg font-semibold text-gray-700 mr-1">₹</span>
@@ -190,7 +190,31 @@ function EarlyBirdRegisterForm() {
                 })}
               </span>
             </div>
-          </div>
+          </div> */}
+
+          {/* Amount with GST Breakdown */}
+<div className="mb-6">
+  <label className="block text-gray-700 font-medium mb-1">Amount</label>
+  <div className="border border-gray-300 rounded-md bg-gray-50 px-4 py-3 space-y-2 text-sm text-gray-700">
+    
+    <div className="flex justify-between">
+      <span>Course Fee</span>
+      <span>₹{(paymentDetails.amount).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
+    </div>
+
+    <div className="flex justify-between text-blue-600">
+      <span>GST (18%)</span>
+      <span>+ ₹{(paymentDetails.amount * 0.18).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
+    </div>
+
+    <div className="border-t border-gray-300 pt-2 flex justify-between font-bold text-gray-800 text-base">
+      <span>Total Payable</span>
+      <span>₹{(paymentDetails.amount * 1.18).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
+    </div>
+
+    <p className="text-xs text-gray-400 italic">* Inclusive of 18% GST as applicable</p>
+  </div>
+</div>
 
           {/* Name */}
           <div className="mb-4">
