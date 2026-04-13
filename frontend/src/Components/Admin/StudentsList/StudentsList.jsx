@@ -48,6 +48,7 @@ const StudentsList = () => {
     { label: "DayScholar/Hostler", key: "dayScholarOrHostler" },
     { label: "Laptop", key: "hasLaptop" },
     { label: "Amount", key: "amount" },
+    { label: "Payment Status", key: "status" },
     { label: "Registration Date", key: "createdAt" },
   ];
 
@@ -64,6 +65,7 @@ const StudentsList = () => {
     dayScholarOrHostler: student.dayScholarOrHostler,
     hasLaptop: student.hasLaptop ? "Yes" : "No",
     amount: student.amount,
+    status: student.status,
     createdAt: new Date(student.createdAt).toLocaleDateString(),
   }));
 
