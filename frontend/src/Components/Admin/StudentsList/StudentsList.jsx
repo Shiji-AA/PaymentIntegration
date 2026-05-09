@@ -7,13 +7,13 @@ import { CSVLink } from "react-csv";
 const StudentsList = () => {
   const [studentDetails, setStudentDetails] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const studentsPerPage = 10;
+  const studentsPerPage = 20;
 
   useEffect(() => {
     axiosInstanceAdmin
       .get("/getallstudents")
       .then((response) => {
-        console.log(response.data,"Response from Admin Dashboard")
+        console.log(response.data, "Response from Admin Dashboard");
         if (response.data.students) {
           setStudentDetails(response.data.students);
         }
@@ -102,7 +102,10 @@ const StudentsList = () => {
                     <th className="p-3 text-left">College</th>
                     <th className="p-3 text-left">Campus</th>
                     <th className="p-3 text-left">Batch</th>
-                    <th className="p-3 text-left">DayScholar/ <br/>Hostler</th>
+                    <th className="p-3 text-left">
+                      DayScholar/ <br />
+                      Hostler
+                    </th>
                     <th className="p-3 text-left">Laptop</th>
                     <th className="p-3 text-left">Amount</th>
                     <th className="p-3 text-left">Payment Status</th>
@@ -128,7 +131,9 @@ const StudentsList = () => {
                         <td className="p-3">{student.campusOpted}</td>
                         <td className="p-3">{student.joiningBatch}</td>
                         <td className="p-3">{student.dayScholarOrHosteler}</td>
-                        <td className="p-3">{student.hasLaptop ? "Yes" : "No"}</td>
+                        <td className="p-3">
+                          {student.hasLaptop ? "Yes" : "No"}
+                        </td>
                         <td className="p-3">₹{student.amount}</td>
                         <td className="p-3">₹{student.status}</td>
                         <td className="p-3">
@@ -152,22 +157,41 @@ const StudentsList = () => {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex justify-center gap-2 my-4">
-                {[...Array(totalPages)].map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => paginate(idx + 1)}
-                    className={`px-3 py-1 rounded ${
-                      currentPage === idx + 1
-                        ? "bg-teal-600 text-white"
-                        : "bg-gray-200 text-gray-700"
-                    }`}
-                  >
-                    {idx + 1}
-                  </button>
-                ))}
+              <div className="flex justify-center items-center gap-3 my-6">
+                {/* First Page */}
+                <button
+                  onClick={() => paginate(1)}
+                  disabled={currentPage === 1}
+                  className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  &#171; Page 1
+                </button>
+
+                {/* Previous */}
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  &#8249; Previous
+                </button>
+
+                {/* Page X of Y */}
+                <span className="px-4 py-2 text-sm text-gray-600 font-medium">
+                  Page {currentPage} of {totalPages}
+                </span>
+
+                {/* Next */}
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Next &#8250;
+                </button>
               </div>
             )}
+            {/* Pagination Ends Here */}
           </div>
         </div>
       </div>
