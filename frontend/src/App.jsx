@@ -26,6 +26,7 @@ import PaymentFailure from "./Components/User/Courses/PaymentFailure";
 import StudentsList from "./Components/Admin/StudentsList/StudentsList";
 import EnrollmentForm from "./Components/User/Courses/EnrollmentForm";
 import EarlyBirdRegisterForm from "./Components/User/Courses/EarlyBirdRegisterForm";
+import PartialPayment from "./Components/User/Courses/PartialPayment";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route path="/adminLogin" element={<AdminLogin />} />
         <Route path="/enroll" element={<EnrollmentForm/>}/>
         <Route path="/earlyBird" element={<EarlyBirdRegisterForm/>}/>
+        <Route path="/partialPayment" element={<PartialPayment/>}/>
         <Route element={<PrivatePageAdmin />}>
         <Route path="/admindashboard" element={<AdminDashboardPage />} />
         <Route path="/getallcourses" element={<CourseList />} />

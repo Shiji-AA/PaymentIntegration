@@ -9,8 +9,11 @@ const axiosInstanceAdmin = axios.create({
 const axiosInstancePayment = axios.create({
   baseURL: `${import.meta.env.VITE_PUBLIC_API_URL}/api/payment`
 });
+const axiosInstancePaymentPartial = axios.create({
+  baseURL: `${import.meta.env.VITE_PUBLIC_API_URL}/api/payment-partial`
+});
 
-export { axiosInstance, axiosInstanceAdmin, axiosInstancePayment };
+export { axiosInstance, axiosInstanceAdmin, axiosInstancePayment,axiosInstancePaymentPartial };
 
 
 // *********************************************************************************
