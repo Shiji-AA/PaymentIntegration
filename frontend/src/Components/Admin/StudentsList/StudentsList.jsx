@@ -6,6 +6,15 @@ import { CSVLink } from "react-csv";
 
 const StudentsList = () => {
   const [studentDetails, setStudentDetails] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({
+    course: "",
+    campus: "",
+    batch: "",
+    dayScholarOrHostler: "",
+    hasLaptop: "",
+    status: "",
+  });
   const [currentPage, setCurrentPage] = useState(1);
   const studentsPerPage = 20;
 
@@ -24,15 +33,105 @@ const StudentsList = () => {
       });
   }, []);
 
+  // Derive unique values for each filter dropdown from the data
+  const uniqueCourses = [
+    ...new Set(
+      studentDetails
+        .map((s) => s.course?.courseName)
+        .filter(Boolean)
+    ),
+  ];
+  const uniqueCampuses = [
+    ...new Set(studentDetails.map((s) => s.campusOpted).filter(Boolean)),
+  ];
+  const uniqueBatches = [
+    ...new Set(studentDetails.map((s) => s.joiningBatch).filter(Boolean)),
+  ];
+  const uniqueStatuses = [
+    ...new Set(studentDetails.map((s) => s.status).filter(Boolean)),
+  ];
+  const uniqueDayScholarHostler = [
+    ...new Set(
+      studentDetails.map((s) => s.dayScholarOrHosteler).filter(Boolean)
+    ),
+  ];
+
+  // Search + Filter logic
+  const filteredStudents = studentDetails.filter((student) => {
+    const q = searchQuery.toLowerCase();
+
+    const matchesSearch =
+      student.customerName?.toLowerCase().includes(q) ||
+      student.customerEmail?.toLowerCase().includes(q) ||
+      student.customerPhone?.toLowerCase().includes(q) ||
+      student.whatsapp?.toLowerCase().includes(q) ||
+      student.course?.courseName?.toLowerCase().includes(q) ||
+      student.collegeName?.toLowerCase().includes(q) ||
+      student.campusOpted?.toLowerCase().includes(q) ||
+      student.joiningBatch?.toLowerCase().includes(q) ||
+      student.status?.toLowerCase().includes(q);
+
+    const matchesCourse =
+      !filters.course || student.course?.courseName === filters.course;
+    const matchesCampus =
+      !filters.campus || student.campusOpted === filters.campus;
+    const matchesBatch =
+      !filters.batch || student.joiningBatch === filters.batch;
+    const matchesDayScholar =
+      !filters.dayScholarOrHostler ||
+      student.dayScholarOrHosteler === filters.dayScholarOrHostler;
+    const matchesLaptop =
+      filters.hasLaptop === "" ||
+      (filters.hasLaptop === "yes" ? student.hasLaptop : !student.hasLaptop);
+    const matchesStatus =
+      !filters.status || student.status === filters.status;
+
+    return (
+      matchesSearch &&
+      matchesCourse &&
+      matchesCampus &&
+      matchesBatch &&
+      matchesDayScholar &&
+      matchesLaptop &&
+      matchesStatus
+    );
+  });
+
   // Pagination
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
-  const currentStudents = studentDetails.slice(
+  const currentStudents = filteredStudents.slice(
     indexOfFirstStudent,
     indexOfLastStudent
   );
-  const totalPages = Math.ceil(studentDetails.length / studentsPerPage);
+  const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setCurrentPage(1);
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      course: "",
+      campus: "",
+      batch: "",
+      dayScholarOrHostler: "",
+      hasLaptop: "",
+      status: "",
+    });
+    setSearchQuery("");
+    setCurrentPage(1);
+  };
+
+  const isAnyFilterActive =
+    searchQuery || Object.values(filters).some((v) => v !== "");
 
   // CSV headers
   const csvHeaders = [
@@ -75,6 +174,8 @@ const StudentsList = () => {
       <div className="bg-gradient-to-b from-teal-500 to-white p-4 rounded-lg min-h-screen">
         <div className="px-3 mt-10">
           <div className="max-w-7xl mx-auto bg-white rounded-lg overflow-hidden shadow-md">
+
+            {/* Header */}
             <div className="flex justify-between items-center bg-white p-4 rounded-t-lg">
               <h3 className="text-2xl font-bold text-teal-800">
                 Registered Students
@@ -89,6 +190,111 @@ const StudentsList = () => {
               </CSVLink>
             </div>
 
+            {/* Search Bar */}
+            <div className="px-4 pb-2">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleSearch}
+                placeholder="Search by name, email, phone, course, college..."
+                className="w-full border border-gray-300 rounded px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              />
+            </div>
+
+            {/* Filters */}
+            <div className="px-4 pb-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mt-2">
+
+                <select
+                  name="course"
+                  value={filters.course}
+                  onChange={handleFilterChange}
+                  className="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700"
+                >
+                  <option value="">All Courses</option>
+                  {uniqueCourses.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+
+                <select
+                  name="campus"
+                  value={filters.campus}
+                  onChange={handleFilterChange}
+                  className="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700"
+                >
+                  <option value="">All Campuses</option>
+                  {uniqueCampuses.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+
+                <select
+                  name="batch"
+                  value={filters.batch}
+                  onChange={handleFilterChange}
+                  className="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700"
+                >
+                  <option value="">All Batches</option>
+                  {uniqueBatches.map((b) => (
+                    <option key={b} value={b}>{b}</option>
+                  ))}
+                </select>
+
+                <select
+                  name="dayScholarOrHostler"
+                  value={filters.dayScholarOrHostler}
+                  onChange={handleFilterChange}
+                  className="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700"
+                >
+                  <option value="">Day Scholar / Hostler</option>
+                  {uniqueDayScholarHostler.map((d) => (
+                    <option key={d} value={d}>{d}</option>
+                  ))}
+                </select>
+
+                <select
+                  name="hasLaptop"
+                  value={filters.hasLaptop}
+                  onChange={handleFilterChange}
+                  className="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700"
+                >
+                  <option value="">Laptop (All)</option>
+                  <option value="yes">Has Laptop</option>
+                  <option value="no">No Laptop</option>
+                </select>
+
+                <select
+                  name="status"
+                  value={filters.status}
+                  onChange={handleFilterChange}
+                  className="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700"
+                >
+                  <option value="">All Statuses</option>
+                  {uniqueStatuses.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Result count + Clear button */}
+              <div className="flex items-center justify-between mt-2">
+                <p className="text-xs text-gray-500">
+                  {filteredStudents.length} of {studentDetails.length} student
+                  {studentDetails.length !== 1 ? "s" : ""} shown
+                </p>
+                {isAnyFilterActive && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="text-xs text-red-500 hover:text-red-700 underline"
+                  >
+                    Clear all filters
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Table */}
             <div className="overflow-x-auto w-full">
               <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
                 <thead className="bg-teal-800 text-white">
@@ -135,7 +341,7 @@ const StudentsList = () => {
                           {student.hasLaptop ? "Yes" : "No"}
                         </td>
                         <td className="p-3">₹{student.amount}</td>
-                        <td className="p-3">₹{student.status}</td>
+                        <td className="p-3">{student.status}</td>
                         <td className="p-3">
                           {new Date(student.createdAt).toLocaleDateString()}
                         </td>
@@ -144,10 +350,12 @@ const StudentsList = () => {
                   ) : (
                     <tr>
                       <td
-                        colSpan={13}
+                        colSpan={14}
                         className="text-center py-4 text-gray-500"
                       >
-                        No students found.
+                        {isAnyFilterActive
+                          ? "No students match the selected filters."
+                          : "No students found."}
                       </td>
                     </tr>
                   )}
@@ -158,7 +366,6 @@ const StudentsList = () => {
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex justify-center items-center gap-3 my-6">
-                {/* First Page */}
                 <button
                   onClick={() => paginate(1)}
                   disabled={currentPage === 1}
@@ -167,7 +374,6 @@ const StudentsList = () => {
                   &#171; Page 1
                 </button>
 
-                {/* Previous */}
                 <button
                   onClick={() => paginate(currentPage - 1)}
                   disabled={currentPage === 1}
@@ -176,12 +382,10 @@ const StudentsList = () => {
                   &#8249; Previous
                 </button>
 
-                {/* Page X of Y */}
                 <span className="px-4 py-2 text-sm text-gray-600 font-medium">
                   Page {currentPage} of {totalPages}
                 </span>
 
-                {/* Next */}
                 <button
                   onClick={() => paginate(currentPage + 1)}
                   disabled={currentPage === totalPages}
@@ -191,7 +395,7 @@ const StudentsList = () => {
                 </button>
               </div>
             )}
-            {/* Pagination Ends Here */}
+
           </div>
         </div>
       </div>
