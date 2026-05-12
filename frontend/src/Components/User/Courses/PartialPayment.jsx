@@ -125,29 +125,22 @@ function PartialPayment() {
         {/* LEFT SIDE INFO */}
         <div className="lg:w-2/5 bg-teal-700 text-white py-14 px-10 flex flex-col justify-between">
           <div>
-            <h1 className="text-sm font-semibold mb-3 uppercase tracking-widest opacity-80">
+            <h1 className="text-sm font-semibold mb-3 uppercase tracking-widest ">
               ARCITE EDUCATIONAL SOLUTIONS PVT. LTD.
             </h1>
 
-            <h2 className="text-3xl font-bold mb-4 leading-snug">
-              Partial Payment
-              <br />
-              <span className="text-teal-200">2026–27</span>
-            </h2>
-
-            <p className="text-sm leading-relaxed opacity-90 mt-2">
-              Reserve your seat at{" "}
-              <span className="font-semibold text-white">
-                ARCITE School of Technical Education
-              </span>{" "}
-              by making a partial payment of ₹2,500.
-            </p>
+          <h2 className="text-2xl font-semibold text-white mb-1 text-center opacity-80">
+  Course Payment
+</h2>
+          <p className="text-center text-sm text-white mb-7 opacity-80">
+  Fill in your details to continue with the payment
+</p>
 
             {/* Amount Summary Box */}
             <div className="mt-8 bg-white/10 border border-white/20 rounded-lg px-5 py-4 text-sm">
               <div className="flex justify-between font-bold text-base text-white">
                 <span>Amount Payable</span>
-                <span>₹{FIXED_AMOUNT.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
+                <span>₹{FIXED_AMOUNT.toLocaleString("en-IN", { minimumFractionDigits: 0 })}</span>
               </div>
             </div>
 
@@ -288,7 +281,7 @@ function PartialPayment() {
             onClick={handleEnrollNow}
             className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-teal-600 text-white text-lg font-semibold hover:bg-teal-800 active:scale-95 transition-all rounded-md shadow-md"
           >
-            Pay ₹{FIXED_AMOUNT.toLocaleString("en-IN", { minimumFractionDigits: 2 })} & Enroll
+            Pay ₹ {FIXED_AMOUNT.toLocaleString("en-IN", { minimumFractionDigits: 0 })} 
             <img src={arrow} alt="arrow" className="w-5 h-5" />
           </button>
 
