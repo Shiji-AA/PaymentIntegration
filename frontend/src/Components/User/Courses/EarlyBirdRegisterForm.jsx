@@ -337,7 +337,7 @@ function EarlyBirdRegisterForm() {
             {
               label: "Joining Batch",
               name: "joiningBatch",
-              options: ["April","May","June","July","Aug","Sep"],
+              options: ["April","May","June","July","Aug","Sep","Oct"],
             },
             {
               label: "DayScholar or Hosteler",

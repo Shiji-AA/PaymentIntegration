@@ -80,9 +80,10 @@ const StudentsList = () => {
     const matchesDayScholar =
       !filters.dayScholarOrHostler ||
       student.dayScholarOrHosteler === filters.dayScholarOrHostler;
+ 
     const matchesLaptop =
-      filters.hasLaptop === "" ||
-      (filters.hasLaptop === "yes" ? student.hasLaptop : !student.hasLaptop);
+  filters.hasLaptop === "" ||
+  student.hasLaptop?.toLowerCase() === filters.hasLaptop.toLowerCase();
     const matchesStatus =
       !filters.status || student.status === filters.status;
 
@@ -161,8 +162,8 @@ const StudentsList = () => {
     collegeName: student.collegeName,
     campusOpted: student.campusOpted,
     joiningBatch: student.joiningBatch,
-    dayScholarOrHostler: student.dayScholarOrHosteler,
-    hasLaptop: student.hasLaptop ? "Yes" : "No",
+    dayScholarOrHostler: student.dayScholarOrHosteler,  
+    hasLaptop: student.hasLaptop?.toLowerCase() === "yes" ? "Yes" : "No",
     amount: student.amount,
     status: student.status,
     createdAt: new Date(student.createdAt).toLocaleDateString(),
@@ -336,9 +337,9 @@ const StudentsList = () => {
                         <td className="p-3">{student.collegeName}</td>
                         <td className="p-3">{student.campusOpted}</td>
                         <td className="p-3">{student.joiningBatch}</td>
-                        <td className="p-3">{student.dayScholarOrHosteler}</td>
+                        <td className="p-3">{student.dayScholarOrHosteler}</td>                       
                         <td className="p-3">
-                          {student.hasLaptop ? "Yes" : "No"}
+                          {student.hasLaptop?.toLowerCase() === "yes" ? "Yes" : "No"}
                         </td>
                         <td className="p-3">₹{student.amount}</td>
                         <td className="p-3">{student.status}</td>
