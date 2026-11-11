@@ -25,7 +25,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: ['http://localhost:4000', 'https://courses.arcite.in', 'https://courses.arcite.in', 'http://localhost:3000'],
+  origin: [ "http://localhost:4000",
+    "http://localhost:3000",
+    "https://courses.arcite.in",
+    "https://www.courses.arcite.in"  
+  ],
   methods: "GET, PUT, POST, PATCH, DELETE",
   allowedHeaders: ["Content-Type", "Authorization"]
 };
