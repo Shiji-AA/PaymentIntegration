@@ -7,7 +7,7 @@ dotenv.config();
 const router = express.Router();
 
 
-const CRICKET_FEE = Number(process.env.CRICKET_FEE || 15);
+const CRICKET_FEE = Number(process.env.CRICKET_FEE || 4000);
 
 const RETURN_URL =
   process.env.JUSPAY_CRICKET_RETURN_URL ||
