@@ -9,7 +9,7 @@ import adminRouter from "./Routes/adminRoutes/adminRoutes.js";
 import juspayConfig from "./config/juspayConfig.js"
 import juspayRouter from './Routes/juspayRoutes.js';
 import partialJuspayRouter from './Routes/partialPaymentRoutes.js'
-
+import cricketRoutes from "./Routes/cricketRoutes.js";
 //console.log("MERCHANT_ID:", process.env.MERCHANT_ID);
 
 dotenv.config();
@@ -36,6 +36,7 @@ app.use("/api/users", userRoutes);
 app.use('/api/admin', adminRouter);
 app.use('/api/payment', juspayRouter);
 app.use('/api/payment-partial', partialJuspayRouter);
+app.use("/api/cricket", cricketRoutes);
 
 // Serving static files for frontend
 app.use(express.static(join(__dirname, '../../frontend/dist')));

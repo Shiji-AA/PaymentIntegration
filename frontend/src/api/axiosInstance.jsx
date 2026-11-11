@@ -13,7 +13,11 @@ const axiosInstancePaymentPartial = axios.create({
   baseURL: `${import.meta.env.VITE_PUBLIC_API_URL}/api/payment-partial`
 });
 
-export { axiosInstance, axiosInstanceAdmin, axiosInstancePayment,axiosInstancePaymentPartial };
+const axiosInstanceCricket = axios.create({
+  baseURL: `${import.meta.env.VITE_PUBLIC_API_URL}/api/cricket`
+});
+
+export { axiosInstance, axiosInstanceAdmin, axiosInstancePayment,axiosInstancePaymentPartial,axiosInstanceCricket };
 
 
 // *********************************************************************************
